@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sua jurisprudência — credenciamento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&family=Karla:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#17303A; --papel:#FAFAF8; --sup:#FFFFFF; --linha:#E3E5E2;
+  --irr:#7A2E22; --irr-bg:#FBF1EF;
+  --res:#B8842B; --res-bg:#FDF6E9;
+  --reg:#2F5D50; --reg-bg:#EFF4F1;
+  --neu:#8A8F8C; --neu-bg:#F2F3F1;
+  --grafite:#5A605D;
+  --serif:'Literata',Georgia,serif;
+  --sans:'Karla',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--tinta);font-family:var(--sans);font-size:16px;line-height:1.6}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+
+.topo{border-bottom:1px solid var(--linha);background:var(--sup)}
+.topo .wrap{display:flex;align-items:center;gap:16px;min-height:62px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.marca{font-family:var(--serif);font-size:17px;font-weight:600}
+.marca span{color:var(--grafite);font-weight:400}
+.sel{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--grafite)}
+.sel select{font-family:var(--sans);font-size:14px;padding:7px 11px;border:1px solid var(--linha);background:var(--sup);color:var(--tinta);border-radius:2px}
+
+.intro{padding:44px 0 26px}
+.intro h1{font-family:var(--serif);font-weight:500;font-size:clamp(26px,4vw,36px);line-height:1.18;
+  letter-spacing:-.02em;margin:0 0 14px;max-width:22ch}
+.intro p{font-size:16.5px;color:var(--grafite);max-width:72ch;margin:0 0 20px;line-height:1.62}
+.resumo{display:flex;flex-wrap:wrap;gap:10px}
+.pill{font-size:13.5px;padding:7px 14px;border-radius:99px;background:var(--sup);border:1px solid var(--linha);color:var(--grafite)}
+.pill b{color:var(--tinta)}
+
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 0;border-top:1px solid var(--linha);padding-top:18px}
+.fb{font-family:var(--sans);font-size:13.5px;padding:7px 14px;border:1px solid var(--linha);background:var(--sup);
+  color:var(--grafite);cursor:pointer;border-radius:99px}
+.fb[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:#fff}
+.fb:hover{border-color:var(--tinta)}
+
+.lista{padding:26px 0 80px;display:flex;flex-direction:column;gap:20px}
+
+.q{background:var(--sup);border:1px solid var(--linha);border-radius:3px;overflow:hidden}
+.q .cab{padding:22px 26px 0}
+.q .rot{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--neu);margin-bottom:9px}
+.q h2{font-family:var(--serif);font-size:20px;font-weight:500;line-height:1.4;margin:0 0 14px;max-width:66ch}
+.pos{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:3px;margin-bottom:6px}
+.pos.irr{background:var(--irr-bg)} .pos.res{background:var(--res-bg)}
+.pos.reg{background:var(--reg-bg)} .pos.neu{background:var(--neu-bg)}
+.pos .et{font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;padding-top:2px}
+.pos.irr .et{color:var(--irr)} .pos.res .et{color:var(--res)}
+.pos.reg .et{color:var(--reg)} .pos.neu .et{color:var(--neu)}
+.pos .tx{font-size:15px;line-height:1.6}
+
+.linhaT{padding:18px 26px 6px}
+.trilha{display:flex;align-items:stretch;gap:0;position:relative;flex-wrap:wrap}
+.ev{flex:1;min-width:180px;position:relative;padding:0 14px 16px 0}
+.ev:before{content:'';position:absolute;left:0;top:9px;right:0;height:2px;background:var(--linha)}
+.ev:last-child:before{right:calc(100% - 10px)}
+.pt{width:11px;height:11px;border-radius:99px;position:relative;z-index:1;margin-bottom:11px;
+  border:2px solid var(--sup);outline:2px solid currentColor}
+.ev.irr .pt{background:var(--irr);color:var(--irr)}
+.ev.res .pt{background:var(--res);color:var(--res)}
+.ev.reg .pt{background:var(--reg);color:var(--reg)}
+.ev.neu .pt{background:var(--neu);color:var(--neu)}
+.ev .dt{font-size:12px;color:var(--grafite);margin-bottom:3px}
+.ev .pr{font-family:var(--mono);font-size:12.5px;font-weight:500;margin-bottom:5px}
+.ev .vd{font-size:13px;font-weight:700;margin-bottom:5px}
+.ev.irr .vd{color:var(--irr)} .ev.res .vd{color:var(--res)}
+.ev.reg .vd{color:var(--reg)} .ev.neu .vd{color:var(--neu)}
+.ev .ds{font-size:13px;color:var(--grafite);line-height:1.5}
+.ev .outro{display:inline-block;font-size:11px;background:var(--neu-bg);color:var(--grafite);
+  padding:2px 7px;border-radius:99px;margin-top:6px}
+
+.abrir{margin:0 26px 20px;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--tinta);
+  background:none;border:none;padding:0;cursor:pointer;border-bottom:1.5px solid var(--linha)}
+.abrir:hover{border-bottom-color:var(--tinta)}
+.det{display:none;border-top:1px solid var(--linha);padding:20px 26px 24px;background:#FCFCFB}
+.q.aberta .det{display:block}
+.det h4{font-family:var(--sans);font-size:12.5px;font-weight:700;color:var(--grafite);margin:0 0 7px}
+.det h4:not(:first-child){margin-top:19px}
+.cit{font-family:var(--serif);font-size:14.5px;line-height:1.65;border-left:2px solid var(--res);
+  padding-left:14px;margin:0 0 5px;max-width:78ch}
+.fonte{font-family:var(--mono);font-size:11.5px;color:var(--grafite);margin:0}
+
+.alerta{margin:0 26px 20px;padding:13px 16px;background:var(--res-bg);border-left:3px solid var(--res);
+  font-size:14px;color:#6B5520;line-height:1.6;border-radius:2px}
+.alerta b{color:#4E3D14}
+
+.vazio{background:var(--sup);border:1px solid var(--linha);padding:24px 26px;border-radius:3px;
+  font-size:15px;color:var(--grafite)}
+
+footer{border-top:1px solid var(--linha);background:var(--sup);padding:30px 0 60px;font-size:13.5px;color:var(--grafite)}
+footer p{margin:0 0 9px;max-width:80ch;line-height:1.65}
+
+
+.topo{position:sticky;top:0;z-index:20}
+.imp{font-family:var(--sans);font-size:13.5px;padding:7px 13px;border:1px solid var(--linha);
+  background:var(--sup);color:var(--grafite);cursor:pointer;border-radius:2px}
+.imp:hover{border-color:var(--tinta);color:var(--tinta)}
+.barra{border-top:1px solid var(--linha);padding-top:16px;margin-top:20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.modos{display:flex;border:1px solid var(--linha);border-radius:3px;overflow:hidden;background:var(--sup)}
+.modos button{font-family:var(--sans);font-size:13.5px;font-weight:600;padding:8px 16px;border:none;
+  background:none;color:var(--grafite);cursor:pointer}
+.modos button[aria-pressed="true"]{background:var(--tinta);color:#fff}
+.cbusca{position:relative;flex:1;min-width:230px}
+.cbusca input{width:100%;font-family:var(--sans);font-size:14.5px;padding:9px 13px 9px 36px;
+  border:1px solid var(--linha);background:var(--sup);color:var(--tinta);border-radius:3px}
+.cbusca input:focus{outline:2px solid rgba(23,48,58,.18);border-color:var(--tinta)}
+.cbusca svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;opacity:.4}
+.filtros{margin-top:12px !important;border-top:none !important;padding-top:0 !important}
+.cont{margin-top:13px;font-size:13.5px;color:var(--grafite)}
+.cont b{color:var(--tinta)}
+.q .rot .dst{color:var(--res)}
+.ev .pr{background:none;border:none;padding:0;cursor:pointer;color:var(--tinta);text-align:left;
+  font-family:var(--mono);font-size:12.5px;font-weight:500;margin-bottom:5px;display:block}
+.ev .pr:hover{text-decoration:underline}
+.proc{background:var(--sup);border:1px solid var(--linha);border-radius:3px;padding:22px 26px}
+.proc .top{display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.proc .num{font-family:var(--mono);font-size:17px;font-weight:500}
+.proc .dtp{font-size:13.5px;color:var(--grafite)}
+.proc .obj{font-family:var(--serif);font-size:17px;margin:0 0 4px}
+.proc .meta{font-size:13.5px;color:var(--grafite);margin-bottom:14px}
+.proc .stat{display:inline-block;font-size:12.5px;font-weight:700;padding:4px 11px;border-radius:99px;margin-bottom:14px}
+.proc .stat.irr{background:var(--irr-bg);color:var(--irr)}
+.proc .stat.reg{background:var(--reg-bg);color:var(--reg)}
+.proc .stat.res2{background:var(--res-bg);color:var(--res)}
+.qi{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--linha);align-items:flex-start}
+.qi .bul{width:9px;height:9px;border-radius:99px;margin-top:7px;flex:none}
+.qi.irr .bul{background:var(--irr)} .qi.res .bul{background:var(--res)}
+.qi.reg .bul{background:var(--reg)} .qi.neu .bul{background:var(--neu)}
+.qi .tt{font-size:14.5px;line-height:1.5}
+.qi .vv{font-size:12.5px;font-weight:700;margin-left:auto;white-space:nowrap;padding-top:2px}
+.qi.irr .vv{color:var(--irr)} .qi.res .vv{color:var(--res)}
+.qi.reg .vv{color:var(--reg)} .qi.neu .vv{color:var(--neu)}
+.nd{background:var(--sup);border:1px solid var(--linha);border-left:4px solid var(--neu);border-radius:3px;padding:22px 26px}
+.nd h3{font-family:var(--serif);font-size:19px;font-weight:500;margin:0 0 9px}
+.nd p{font-size:14.8px;color:var(--grafite);line-height:1.62;margin:0 0 16px;max-width:74ch}
+.nd ul{margin:0;padding:0;list-style:none}
+.nd li{padding:10px 0;border-top:1px solid var(--linha);font-size:14.5px;line-height:1.5;display:flex;gap:12px;align-items:flex-start}
+.nd li .bl{font-size:11.5px;color:var(--neu);white-space:nowrap;padding-top:3px;min-width:118px}
+@media print{
+  .topo,.barra,.filtros,.cont,.imp,.abrir,footer{display:none!important}
+  body{background:#fff}
+  .q,.proc,.nd{break-inside:avoid;border-color:#ccc}
+  .det{display:block!important;background:#fff}
+  .intro{padding-top:6px}
+}
+.ir{font-family:var(--sans);font-size:13.5px;font-weight:600;padding:6px 13px;border:1px solid var(--tinta);
+  background:none;color:var(--tinta);cursor:pointer;border-radius:2px;margin-left:6px}
+.ir:hover{background:var(--tinta);color:#fff}
+.selo{font-size:10.5px;font-weight:700;letter-spacing:.03em;text-transform:none;
+  padding:3px 9px;border-radius:99px;margin-left:9px;vertical-align:middle}
+.selo.rasc{background:#FDF6E9;color:#8A6318;border:1px solid #EFDDBA}
+.selo.ok{background:var(--reg-bg);color:var(--reg);border:1px solid #CBDDD3}
+.pos .et{opacity:.85}
+.qualif{margin:0 25px 18px;padding:12px 15px;border:1px dashed var(--linha);border-radius:2px;
+  display:flex;gap:12px;align-items:flex-start;background:#FCFCFB}
+.qualif.pend{border-color:#E0CFA6;background:#FEFBF4}
+.qualif .qet{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  color:#8A6318;white-space:nowrap;padding-top:2px}
+.qualif .qtx{font-size:13.8px;color:var(--grafite);line-height:1.55}
+.pos .tx i{color:var(--grafite);font-style:italic}
+.aviso-topo{background:#FEFBF4;border:1px solid #E0CFA6;border-radius:3px;padding:14px 17px;
+  font-size:14px;color:#6B5520;line-height:1.6;margin-bottom:18px}
+.aviso-topo b{color:#4E3D14}
+.tr{padding:14px 0;border-top:1px solid var(--linha)}
+.tr:first-of-type{border-top:none;padding-top:2px}
+.trc{display:flex;align-items:baseline;gap:11px;margin-bottom:8px;flex-wrap:wrap}
+.trp{font-family:var(--mono);font-size:12.5px;font-weight:500}
+.trd{font-size:12px;color:var(--grafite)}
+.trv{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px}
+.tr.irr .trv{background:var(--irr-bg);color:var(--irr)}
+.tr.res .trv{background:var(--res-bg);color:var(--res)}
+.tr.reg .trv{background:var(--reg-bg);color:var(--reg)}
+.tr.neu .trv{background:var(--neu-bg);color:var(--neu)}
+.tr.irr .cit{border-left-color:var(--irr)}
+.tr.reg .cit{border-left-color:var(--reg)}
+.tr.neu .cit{border-left-color:var(--neu)}
+.semcit{font-size:13.5px;color:var(--neu);font-style:italic;margin:0 0 5px;padding-left:16px}
+.det h4{margin-bottom:12px}
+.qi .tt.lk{background:none;border:none;padding:0;text-align:left;cursor:pointer;
+  font-family:var(--sans);color:var(--tinta)}
+.qi .tt.lk:hover{text-decoration:underline}
+.gr{font-size:10.5px;font-weight:700;letter-spacing:.03em;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.gr.reg{background:var(--reg-bg);color:var(--reg)}
+.gr.res{background:var(--res-bg);color:var(--res)}
+.gr.irr{background:var(--irr-bg);color:var(--irr)}
+.gr.neu{background:var(--neu-bg);color:var(--neu)}
+.legenda{font-size:12.5px;color:var(--neu);margin-bottom:4px;font-style:italic}
+.sel{margin-left:auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.sel label{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--grafite)}
+.sel select{max-width:250px}
+.intro h1 .assunto{font-weight:600;font-size:1.12em;color:var(--tinta);white-space:nowrap}
+.leg{background:var(--sup);border:1px solid var(--linha);border-radius:3px;padding:16px 20px;
+  margin-bottom:18px;display:flex;flex-wrap:wrap;gap:9px 22px;align-items:center}
+.legt{font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--neu);
+  width:100%;margin-bottom:2px}
+.legi{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--grafite)}
+.legn{width:100%;font-size:12.5px;color:var(--neu);line-height:1.55;margin-top:4px;
+  border-top:1px solid var(--linha);padding-top:10px}
+
+/* ---------------- celular ---------------- */
+@media(max-width:760px){
+  body{font-size:15.5px}
+  .wrap{padding:0 16px}
+
+  /* cabeçalho: não gruda, e os seletores empilham */
+  .topo{position:static}
+  .topo .wrap{min-height:0;padding-top:12px;padding-bottom:6px;gap:10px}
+  .marca{font-size:15.5px;width:100%}
+  .sel{margin-left:0;width:100%;display:grid;grid-template-columns:1fr;gap:9px}
+  .sel label{display:grid;grid-template-columns:64px 1fr;align-items:center;gap:9px;font-size:12.5px}
+  .sel select{max-width:none;width:100%;font-size:15px;padding:9px 10px}
+  .imp{width:100%;padding:10px;font-size:14px;margin-top:2px}
+
+  /* abertura mais curta */
+  .intro{padding:22px 0 16px}
+  .intro h1{font-size:26px;line-height:1.22;margin-bottom:10px;max-width:none}
+  .intro .sub{font-size:14.5px;margin-bottom:14px}
+  .resumo{gap:6px;margin-bottom:14px}
+  .pill{font-size:12.5px;padding:5px 11px}
+
+  /* barra de modos e busca */
+  .barra{margin-top:14px;padding-top:12px;gap:10px}
+  .modos{width:100%}
+  .modos button{flex:1;padding:9px 4px;font-size:12.5px;line-height:1.15}
+  .cbusca{min-width:0;width:100%}
+  .filtros{gap:6px}
+  .fb{font-size:12.5px;padding:6px 11px}
+
+  /* cartões */
+  .lista{gap:14px}
+  .q .cab{padding:17px 17px 0}
+  .q .rot{font-size:10.5px;line-height:1.5}
+  .selo{display:inline-block;margin-left:0;margin-top:5px}
+  .q h2{font-size:17.5px;line-height:1.35;margin-bottom:11px}
+  .pos{flex-direction:column;gap:5px;padding:12px 13px}
+  .pos .et{font-size:10px}
+  .pos .tx{font-size:14.2px}
+
+  /* linha do tempo vira vertical */
+  .linhaT{padding:15px 17px 3px}
+  .trilha{display:block}
+  .ev{min-width:0;width:100%;padding:0 0 13px 15px;border-left:2px solid var(--linha);margin-bottom:0}
+  .ev:last-child{border-left-color:transparent;padding-bottom:2px}
+  .ev:before{display:none}
+  .pt{position:absolute;left:-7px;top:1px;margin:0}
+  .ev .dt{display:inline;font-size:11.5px}
+  .ev .pr{display:inline;margin-left:7px;margin-bottom:0}
+  .ev .vd{margin-top:3px;font-size:13.5px}
+  .ev .ds{font-size:12.8px}
+
+  .abrir,.alerta,.qualif{margin-left:17px;margin-right:17px}
+  .qualif{flex-direction:column;gap:5px}
+  .det{padding:16px 17px 19px}
+  .cit{font-size:13.8px;padding-left:12px}
+  .trc{gap:7px}
+
+  /* por processo */
+  .proc{padding:18px 17px}
+  .proc .num{font-size:15.5px}
+  .proc .obj{font-size:15.5px}
+  .qi{flex-wrap:wrap;gap:8px}
+  .qi .tt{flex:1 1 100%;order:2;font-size:14px}
+  .qi .bul{order:1;margin-top:6px}
+  .qi .vv{order:1;margin-left:0;font-size:12px}
+  .gr{order:3}
+
+  /* legenda e vazios */
+  .leg{padding:14px 16px;gap:8px 14px}
+  .legi{font-size:12.5px;flex:1 1 100%}
+  .nd{padding:18px 17px}
+  .nd li{flex-direction:column;gap:3px}
+  .nd li .bl{min-width:0}
+  .vazio{padding:18px 17px;font-size:14.2px}
+  .aviso-topo{padding:13px 15px;font-size:13.5px}
+  footer{padding:22px 0 40px}
+}
+@media(max-width:400px){
+  .sel label{grid-template-columns:1fr}
+  .modos button{font-size:11.5px;padding:9px 2px}
+}
+.pf{background:var(--sup);border:1px solid var(--linha);border-left:4px solid var(--reg);
+  border-radius:3px;padding:22px 25px;margin-bottom:16px}
+.pf.revisao{border-left-color:var(--res)}
+.pf.proposta{border-left-color:var(--neu)}
+.pfso{margin-top:14px;padding:11px 13px;background:var(--neu-bg);border-radius:3px;
+  font-size:13.2px;line-height:1.55;color:var(--tinta)}
+.pfso .pfrt{display:block;font-size:10.5px;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--neu);margin-bottom:4px}
+.pf.superada{border-left-color:var(--neu)}
+.pfcab{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:11px}
+.pfid{font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--tinta)}
+.pfv{font-size:12px;color:var(--neu)}
+.pfest{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:99px}
+.pfest.reg{background:var(--reg-bg);color:var(--reg)}
+.pfest.res{background:var(--res-bg);color:var(--res)}
+.pfest.neu{background:var(--neu-bg);color:var(--neu)}
+.pfen{font-family:var(--serif);font-size:18px;line-height:1.5;margin:0 0 14px;max-width:74ch}
+.pfbase{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--grafite);margin-bottom:4px}
+.pfn{font-weight:700;color:var(--tinta)}
+.pfp{font-family:var(--mono);font-size:11.5px;background:var(--neu-bg);padding:3px 8px;border-radius:2px}
+.pfu{color:var(--neu)}
+.pfrev{margin-top:13px;padding:12px 15px;background:var(--res-bg);border-radius:2px;
+  display:flex;gap:11px;align-items:flex-start;font-size:13.5px;color:#6B5520;line-height:1.55}
+.pfrt{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;padding-top:2px}
+.pflk{margin-top:14px;font-family:var(--sans);font-size:13.8px;font-weight:600;color:var(--tinta);
+  background:none;border:none;padding:0;cursor:pointer;border-bottom:1.5px solid var(--linha)}
+.pflk:hover{border-bottom-color:var(--tinta)}
+.pf .det{padding:2px 0 0;margin-top:16px;background:none;border-top:1px solid var(--linha)}
+.pf.aberta .det{display:block}
+.pf .linhaT{padding:16px 0 6px}
+.pf .det h4{margin-top:22px}
+.pfcnt{margin:2px 0 0;padding:11px 13px;background:var(--neu-bg);border-radius:3px;
+  font-size:13.5px;line-height:1.5;color:var(--tinta)}
+.h4n{display:inline-block;margin-left:5px;padding:1px 7px;border-radius:99px;
+  background:var(--neu-bg);color:var(--neu);font-size:10.5px;font-weight:700;vertical-align:1px}
+.nf{background:var(--sup);border:1px solid var(--linha);border-radius:3px;padding:20px 25px;margin-top:6px}
+.nf h3{font-family:var(--serif);font-size:18px;font-weight:500;margin:0 0 8px}
+.nf p{font-size:14.2px;color:var(--grafite);margin:0 0 13px;line-height:1.6;max-width:74ch}
+.nf ul{margin:0;padding:0;list-style:none}
+.nf li{padding:9px 0;border-top:1px solid var(--linha);display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.nf li .lk{background:none;border:none;padding:0;text-align:left;cursor:pointer;font-family:var(--sans);
+  font-size:14.2px;color:var(--tinta);flex:1}
+.nf li .lk:hover{text-decoration:underline}
+.nfp{font-family:var(--mono);font-size:11.5px;color:var(--neu)}
+@media(max-width:760px){
+  .pf{padding:18px 17px}
+  .pfen{font-size:16px}
+  .pfrev{flex-direction:column;gap:4px}
+  .nf{padding:17px}
+  .nf li{flex-direction:column;gap:3px}
+}
+.grp{margin-bottom:6px}
+.grpt{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--neu);margin:16px 0 2px;display:flex;align-items:center;gap:8px}
+.grp:first-child .grpt{margin-top:4px}
+.grpn{font-size:11px;background:var(--neu-bg);color:var(--grafite);padding:2px 7px;border-radius:99px}
+.nd li .bl{min-width:52px;font-family:var(--mono);font-size:11.5px;color:var(--neu);text-align:right}
+@media(max-width:760px){.nd li .bl{min-width:0}}
+.nd li .bl.nv{color:#1F7A4D;font-weight:700}
+.qtx{display:block;flex:1;min-width:0}
+.tagnv{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:99px;vertical-align:1.5px;
+  background:#E7F3EC;color:#1F7A4D;font-family:var(--sans);font-size:9.5px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase}
+.vst{display:block;margin-top:7px;font-style:normal;font-size:12.5px;line-height:1.5;
+  color:var(--grafite);background:#F3F0E8;border-left:2px solid #C9A227;padding:7px 11px;border-radius:0 3px 3px 0}
+.vst b{color:var(--tinta)}
+.ndtopo{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:2px 0 0}
+.ndf{font-family:var(--sans);font-size:12.8px;font-weight:600;padding:6px 13px;border-radius:99px;
+  border:1px solid var(--linha);background:#fff;color:var(--grafite);cursor:pointer}
+.ndf[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:#fff}
+.ndf:hover{border-color:var(--neu)}
+.ndleg{font-size:12.8px;color:var(--neu);line-height:1.6;margin:16px 0 20px;max-width:78ch;padding-top:14px;border-top:1px solid var(--linha)}
+.ndvazio{padding:18px 0 4px;font-size:14.5px;color:var(--grafite)}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="wrap">
+    <span class="marca">Sua jurisprudência <span>· protótipo</span></span>
+    <div class="sel">
+      <label>Autoridade
+        <select id="aut">
+          <optgroup label="Conselheiros">
+            <option value="waldir">Cons. Waldir Neves Barbosa</option>
+            <option value="osmar">Cons. Osmar Domingues Jeronymo</option>
+            <option value="jerson">Cons. Jerson Domingos</option>
+            <option value="marcio">Cons. Marcio Campos Monteiro</option>
+            <option value="flavio">Cons. Flávio Esgaib Kayatt</option>
+            <option value="iran">Cons. Iran Coelho das Neves</option>
+            <option value="ronaldo">Cons. Ronaldo Chadid</option>
+          </optgroup>
+          <optgroup label="Conselheiros Substitutos">
+            <option value="celio" selected>Cons. Subst. Célio Lima de Oliveira</option>
+            <option value="leandro">Cons. Subst. Leandro Lobo Ribeiro Pimentel</option>
+            <option value="patricia">Cons. Subst. Patrícia Sarmento dos Santos</option>
+          </optgroup>
+          <optgroup label="Conjunto">
+            <option value="todos">Todos os relatores do acervo</option>
+          </optgroup>
+        </select>
+      </label>
+      <label>Área
+        <select id="area">
+          <option value="todas">Todas as áreas</option>
+          <option value="saude" selected>Saúde</option>
+          <option value="educacao">Educação</option>
+          <option value="obras">Obras e engenharia</option>
+          <option value="contratos">Contratos</option>
+          <option value="contas">Contas</option>
+        </select>
+      </label>
+      <label>Assunto
+        <select id="assunto"></select>
+      </label>
+      <button class="imp" type="button" id="btImp">Imprimir</button>
+    </div>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="wrap">
+    <h1 id="titulo">Como o Conselheiro Substituto tem decidido credenciamento</h1>
+    <p id="subtitulo"></p>
+    <div class="resumo" id="resumo"></div>
+    <div class="barra">
+      <div class="modos" id="modos">
+        <button type="button" data-m="posicoes" aria-pressed="true">Posições firmadas</button>
+        <button type="button" data-m="questao" aria-pressed="false">Por questão</button>
+        <button type="button" data-m="processo" aria-pressed="false">Por processo</button>
+        <button type="button" data-m="aberto" aria-pressed="false">Ainda não decidi</button>
+      </div>
+      <div class="cbusca">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5"/></svg>
+        <input id="q" type="search" autocomplete="off" placeholder="buscar em perguntas, teses e processos…">
+      </div>
+    </div>
+    <div class="filtros" id="filtros"></div>
+    <div class="cont" id="cont"></div>
+  </div>
+</section>
+
+<main class="wrap lista" id="lista"></main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Sobre os dados.</b> Oito processos de credenciamento em saúde, julgados entre maio de 2024 e setembro de 2025. Seis relatados pelo Cons. Subst. Célio Lima de Oliveira, e dois pelo Cons. Waldir Neves Barbosa. Cada decisão é atribuída ao relator que a proferiu, e o filtro de autoridade separa os dois acervos. As teses foram extraídas dos votos, com o trecho de origem indicado.</p>
+    <p>Nenhuma afirmação sobre coerência é feita além do que estes oito processos mostram. Onde a questão apareceu uma vez só, está escrito que apareceu uma vez só.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+
+var Q = [
+{
+  id:'q1', cat:['26'], aut:'celio', area:'saude', assunto:'credenciamento', grupo:'fundamento',
+  titulo:'O credenciamento é hipótese de inexigibilidade de licitação?',
+  posicao:'reg',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Sim. Embora não mencionado expressamente na Lei 8.666/93, está tipificado na previsão geral do caput do art. 25, porque a inviabilidade de competição decorre de a Administração dispor-se a contratar todos os interessados aptos. Sob a Lei 14.133/2021 a hipótese passou a ser expressa. A fundamentação aparece em três dos cinco votos; em um o enquadramento é pressuposto sem ser enunciado, e em outro não chega a ser discutido.',
+  eventos:[
+    {d:'mai/2024', p:'TC/6886/2023', v:'Pressupôs, sem enunciar', c:'neu', t:'O voto trata o credenciamento como inexigibilidade e discorre sobre as exceções ao dever de licitar, mas não enuncia o enquadramento como tese',
+     cit:'Sabe-se que a regra geral para a Administração Pública contratar serviços, realizar compras, obras e alienações é a de que tais contratos sejam precedidos de procedimento licitatório, a teor do que dispõe o art. 37, XXI da Constituição Federal. Entretanto, o próprio texto Constitucional abre a possibilidade de a Lei Ordinária fixar hipóteses para estabelecer exceções à regra de licitar.',
+     fonte:'REV - G.WNB - 1499/2024, fls. 971'},
+    {d:'jul/2024', p:'TC/8328/2018', v:'Não enfrentou', c:'neu', t:'O voto passa direto ao mérito, sem tratar do enquadramento do credenciamento',
+     cit:null, fonte:'REV - G.WNB - 3077/2023 — a questão não é abordada'},
+    {d:'ago/2024', p:'TC/23475/2017', v:'Sim', c:'reg', t:'Art. 25, caput. Invoca os Acórdãos TCU 656/1995 e 3567/2014',
+     cit:'Embora não esteja previsto nos incisos do art. 25 da Lei n. 8.666/1993, o credenciamento tem sido admitido pela doutrina e pela jurisprudência como hipótese de inexigibilidade inserida no caput do referido dispositivo legal, porquanto a inviabilidade de competição configura-se pela possibilidade de contratação de todos os interessados.',
+     fonte:'REV - G.WNB - 3541/2023, fls. 463'},
+    {d:'mai/2025', p:'TC/2295/2022', v:'Sim', c:'reg', t:'Art. 25, caput. Invoca o Manual do Ministério da Saúde',
+     cit:'previsão geral contida no caput do artigo 25. Além disso, o Manual de Orientações para Contratação de Serviços de Saúde, do Ministério da Saúde, prevê a inexigibilidade de licitação, por meio de credenciamento como procedimento legal para a prestação de serviços de saúde, quando houver inviabilidade de competição.',
+     fonte:'REV - G.WNB - 127/2025, fls. 705'},
+    {d:'mai/2025', p:'TC/2687/2022', v:'Sim', c:'reg', t:'Art. 25, caput. Invoca o Manual do Ministério da Saúde',
+     cit:'previsão geral contida no caput do artigo 25. Além disso, o Manual de Orientações para Contratação de Serviços de Saúde, do Ministério da Saúde, prevê a inexigibilidade de licitação, por meio de credenciamento como procedimento legal para a prestação de serviços de saúde, quando houver inviabilidade de competição.',
+     fonte:'REV - G.WNB - 374/2025, fls. 710'}
+  ],
+  cit:'O credenciamento é hipótese de inviabilidade de competição não expressamente mencionada no art. 25 da Lei 8.666/93. Adota-se o credenciamento quando a Administração tem por objetivo dispor da maior rede possível de prestadores de serviços.',
+  fonte:'Acórdão TCU 3567/2014, citado no REV - G.WNB - 3541/2023, fls. 464'
+},
+{
+  id:'q2', cat:['44'], aut:'celio', area:'saude', assunto:'credenciamento', grupo:'remessa',
+  titulo:'A remessa dos documentos ao Tribunal foi tempestiva?',
+  posicao:'res',
+  proc:'rascunho', qualif:{r:'Conferência independente do fato, e não mudança de entendimento'},
+  posicaoTxt:'Quando confirmada a intempestividade, ela é tratada como irregularidade autônoma, com multa própria ao responsável pela remessa — distinta da multa pelo mérito. Mas em outro caso o relator conferiu os prazos e afirmou que a remessa fora tempestiva, contrariando a análise técnica.',
+  eventos:[
+    {d:'jul/2024', p:'TC/8328/2018', v:'Intempestiva', c:'irr', t:'Multa de 30 UFERMS ao responsável pela remessa, separada dos 50 pela homologação',
+     cit:'No que diz respeito à remessa de documentos obrigatórios a esta Corte de Contas, também não foi atendido o prazo estabelecido na Instrução Normativa.',
+     fonte:'REV - G.WNB - 3077/2023, fls. 229'},
+    {d:'ago/2024', p:'TC/23475/2017', v:'Tempestiva', c:'reg', t:'O voto afirma que a remessa foi efetivada de forma tempestiva, contrariando a divisão',
+     cit:'Quanto à remessa dos documentos obrigatórios a esta Corte de Contas, foi efetivada de forma tempestiva, em conformidade ao disposto na Resolução Normativa n. 54/2016, vigente à época.',
+     fonte:'REV - G.WNB - 3541/2023, fls. 466'},
+    {d:'mai/2025', p:'TC/2687/2022', v:'Não enfrentou', c:'neu', t:'Achado saneado antes da decisão',
+     cit:null, fonte:'O achado foi saneado na fase técnica e não chegou ao voto'}
+  ],
+  cit:'Quanto à remessa dos documentos obrigatórios a esta Corte de Contas, foi efetivada de forma tempestiva, em conformidade ao disposto na Resolução Normativa n. 54/2016, vigente à época.',
+  fonte:'REV - G.WNB - 3541/2023, fls. 466',
+  alerta:'Nos dois casos em que a questão foi enfrentada, a divisão havia apontado intempestividade. Em um o relator confirmou; no outro, verificou os prazos e afastou. Em três processos posteriores a conferência da divisão ficou prejudicada pela falta do ato de ratificação, e a questão não chegou ao voto.'
+},
+{
+  id:'q3', cat:['12','13'], aut:'celio', area:'saude', assunto:'credenciamento', grupo:'preco',
+  titulo:'A ausência ou insuficiência da pesquisa de preços gera irregularidade?',
+  posicao:'irr',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'As duas decisões apontam em sentidos opostos, sobre fatos que não são os mesmos. Em maio de 2024, a pesquisa não havia sido realizada, mas os valores conferiam com contratações de outros entes para o mesmo objeto: ressalva e recomendação. Em julho de 2024, a pesquisa existia, porém fora feita com empresas de especialidade diversa da contratada: irregularidade e multa.',
+  eventos:[
+    {d:'mai/2024', p:'TC/6886/2023', v:'Ressalva', c:'res', t:'A pesquisa não foi realizada, mas os valores credenciados conferiam com contratações de outros entes. Divergiu do MPC, que pedia irregularidade com multa',
+     cit:'Data vênia ao posicionamento do parquet, assiste razão ao jurisdicionado uma vez que os valores credenciados estão em conformidade com contratações realizadas por outros entes para a consecução do mesmo objeto, conforme documentos juntados as peças nº 31 e 32. Dessa forma, a ausência de pesquisa de mercado pode ser ressalvada, conforme jurisprudência dessa Corte de Contas em caso análogo.',
+     fonte:'REV - G.WNB - 1499/2024, fls. 972'},
+    {d:'jul/2024', p:'TC/8328/2018', v:'Não justifica', c:'irr', t:'Cotação com empresas de gastroenterologia e cardiologia para consultas de oftalmologia. Multa',
+     cit:'a cotação de preços foi realizada com três empresas, sendo uma que presta serviços médicos de gastroenterologia e outra de cardiologia, o que evidentemente não deveria ser utilizado como pesquisa de preços para consultas de oftalmologia.',
+     fonte:'REV - G.WNB - 3077/2023, fls. 228'},
+    {d:'ago/2024', p:'TC/23475/2017', v:'Não enfrentou', c:'neu', t:'A divisão apontou ausência de justificativa do preço, mas o voto não tratou do ponto',
+     cit:null, fonte:'O voto não trata deste achado'}
+  ],
+  cit:'A pesquisa de preços é de suma importância dentro do credenciamento. É por meio dela que se afere o valor de mercado do serviço a ser credenciado, bem como, se obtém a estimativa de custo do serviço a ser prestado, garantindo que este seja justo e compatível com a realidade do mercado.',
+  fonte:'REV - G.WNB - 1499/2024, fls. 972',
+  alerta:'A contagem registra respostas incompatíveis. A qualificação não é automática: em um caso a pesquisa inexistia e havia outro parâmetro de conformidade; no outro, a pesquisa existia e era imprestável. Se isso é distinção de fato ou mudança de entendimento é juízo do gabinete.'
+},
+{
+  id:'q4', cat:['22-A'], aut:'celio', area:'saude', assunto:'credenciamento', grupo:'publicidade',
+  titulo:'A falta de publicação do edital de chamamento invalida o credenciamento?',
+  posicao:'irr',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Sim. Sem a publicação não se permite que outros interessados tomem conhecimento e participem. É requisito indispensável à validade do credenciamento, e a sua ausência configura irregularidade com multa.',
+  eventos:[
+    {d:'ago/2024', p:'TC/23475/2017', v:'Invalida', c:'irr', t:'Irregularidade e multa de 50 UFERMS. Questão suscitada pelo Ministério Público de Contas, não pela divisão',
+     cit:'o jurisdicionado deixou de observar um importante e indispensável requisito que torna válido o credenciamento e, por esta razão fica configurada a irregularidade deste Credenciamento.', fonte:'REV - G.WNB - 3541/2023, fls. 466'}
+  ],
+  cit:'o jurisdicionado deixou de observar um importante e indispensável requisito que torna válido o credenciamento e, por esta razão fica configurada a irregularidade deste Credenciamento.', fonte:'REV - G.WNB - 3541/2023, fls. 466'
+},
+{
+  id:'q10', cat:['20-A','20-B'], aut:'celio', area:'saude', assunto:'credenciamento', grupo:'publicidade',
+  titulo:'A falta de publicação dos atos de homologação e adjudicação compromete o credenciamento?',
+  posicao:'res',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Não, quando a ratificação da adesão de cada empresa foi publicada individualmente. Aplica-se o princípio do formalismo moderado: a falha não compromete o procedimento e enseja ressalva com recomendação.',
+  eventos:[
+    {d:'mai/2024', p:'TC/6886/2023', v:'Não compromete', c:'res', t:'Houve publicação individual da ratificação da adesão de cada credenciado. Ressalva e recomendação. Divergiu do MPC, que pedia irregularidade com multa',
+     cit:'Assim, diante da publicação individual da ratificação da adesão de empresas ao credenciamento, a ausência da publicação do ato de homologação e adjudicação alegada pela Procuradoria de Contas não é capaz de comprometer o procedimento ora analisado, sendo suficiente a adoção de ressalva e recomendação ao responsável para que não incorra novamente na falha identificada.',
+     fonte:'REV - G.WNB - 1499/2024, fls. 974'}
+  ],
+  cit:'Há que se considerar aqui, também, a incidência do Princípio do Formalismo Moderado, que consiste em equilibrar a observância das formalidades legais com a efetividade do processo, de modo a garantir tanto a legalidade quanto a eficiência na contratação pública.',
+  fonte:'REV - G.WNB - 1499/2024, fls. 974',
+  alerta:'A ressalva se apoia num fato específico: a ratificação da adesão de cada credenciado havia sido publicada individualmente. O entendimento não alcança, por si, o caso em que nenhuma publicação foi feita.'
+},
+{
+  id:'q5', cat:['5','7'], aut:'celio', area:'saude', assunto:'credenciamento', grupo:'formalizacao',
+  titulo:'O parecer jurídico precisa ser emitido pela Procuradoria do Município?',
+  posicao:'reg',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Não. O parágrafo único do art. 38 obriga que a Administração seja juridicamente assessorada, mas não especifica por quem o parecer deve ser elaborado. Verificado que o parecer adentra ao conteúdo de fato e de direito, houve efetivo assessoramento, e não cabe declarar irregularidade pela natureza do vínculo do parecerista.',
+  eventos:[
+    {d:'mai/2025', p:'TC/2295/2022', v:'Não é exigido', c:'reg', t:'Divergiu da divisão e do MPC, que propunham irregularidade com multa',
+     cit:'não cabendo declará-lo irregular em razão da natureza jurídica da relação entre o parecerista e a administração, afinal, o conteúdo do dispositivo obriga que a Administração seja juridicamente assessorada, mas não especifica por quem esse parecer deve ser elaborado.', fonte:'REV - G.WNB - 127/2025, fls. 707'}
+  ],
+  cit:'não cabendo declará-lo irregular em razão da natureza jurídica da relação entre o parecerista e a administração, afinal, o conteúdo do dispositivo obriga que a Administração seja juridicamente assessorada, mas não especifica por quem esse parecer deve ser elaborado.', fonte:'REV - G.WNB - 127/2025, fls. 707',
+  alerta:'Neste caso o relator afastou dois achados que a divisão e o Ministério Público de Contas haviam sustentado, invocando o RE 656.558 do Supremo Tribunal Federal, que decidiu não ser obrigatória a instituição de procuradoria nos municípios.'
+},
+{
+  id:'q6', cat:['1','8'], aut:'celio', area:'saude', assunto:'credenciamento', grupo:'formalizacao',
+  titulo:'A ausência de paginação dos autos gera irregularidade?',
+  posicao:'res',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Não, quando os documentos demonstram cronologia e a sequência foi obedecida sem prejuízo. Trata-se de impropriedade formal, que enseja ressalva e recomendação, e não irregularidade.',
+  eventos:[
+    {d:'mai/2025', p:'TC/2295/2022', v:'Ressalva', c:'res', t:'Regularidade com ressalva e recomendação para constar a paginação',
+     cit:'A ausência de numeração em parte do processo é considerada, no caso, como mera impropriedade formal, que enseja ressalva ao julgamento regular do procedimento licitatório e a recomendação ao jurisdicionado para que não incorra na mesma falha.', fonte:'AC01-310/2024, Cons. Flávio Kayatt, citado no REV - G.WNB - 127/2025, fls. 708'}
+  ],
+  cit:'A ausência de numeração em parte do processo é considerada, no caso, como mera impropriedade formal, que enseja ressalva ao julgamento regular do procedimento licitatório e a recomendação ao jurisdicionado para que não incorra na mesma falha.', fonte:'AC01-310/2024, Cons. Flávio Kayatt, citado no REV - G.WNB - 127/2025, fls. 708'
+},
+{
+  id:'q11', cat:['27','27-A'], aut:'celio', area:'saude', assunto:'credenciamento', grupo:'fundamento',
+  titulo:'O credenciamento pode ter por objeto cargo ou função de direção técnica?',
+  posicao:'irr',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Não. O credenciamento pressupõe contratação paralela e não excludente, e não há como contratar mais de um profissional para a mesma função de direção. O provimento do cargo de diretor técnico se dá por designação da Administração, nos termos da Resolução CFM 2.147/2016. O relator concedeu medida cautelar para excluir a função do edital e, ao final, confirmou a liminar.',
+  eventos:[
+    {d:'fev/2025', p:'TC/4220/2024', v:'Não pode', c:'irr', t:'Controle prévio. Medida cautelar concedida para excluir a Direção Técnica do credenciamento, depois confirmada no acórdão',
+     cit:'revoga-se liminar quando a decisão definitiva substitui a medida e a considera improcedente, o que não se verifica aqui, haja vista que a irregularidade apontada pela Divisão de Fiscalização realmente existiu e só foi corrigida em razão da liminar.',
+     fonte:'REV - G.WNB - 3588/2024, fls. 206'}
+  ],
+  cit:'Conclui-se, assim, que o credenciamento de prestação de serviços de diretor técnico contraria o art. 79 da Lei Federal n° 14.133/2021.',
+  fonte:'ANA - DFS - 11782/2024, fls. 148 — fundamento acolhido pela decisão liminar e confirmado no acórdão',
+  alerta:'Único processo de controle prévio do conjunto. A questão foi decidida em cautelar, e não em julgamento de mérito do procedimento, que foi remetido ao controle posterior.'
+},
+{
+  id:'q12', cat:['25-A'], aut:'waldir', area:'saude', assunto:'credenciamento', grupo:'fundamento',
+  titulo:'A cláusula de cadastro de reserva restringe o ingresso de novos credenciados?',
+  posicao:'irr',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Sim. O edital que institui cadastro de reserva e ordem sequencial de convocação cria preferência entre credenciados e contraria a contratação paralela e não excludente do art. 79, I, da Lei 14.133/2021, que pressupõe cadastramento permanente. A cláusula deve ser suprimida.',
+  eventos:[
+    {d:'set/2025', p:'TC/2081/2024', v:'Restringe', c:'irr', t:'Irregularidade e multa de 50 UFERMS. Recomendação para que o edital não contenha cláusulas restritivas',
+     cit:'O credenciamento, como procedimento utilizado para contratações paralelas e não excludentes de prestadores entre si, de acordo com o conceito positivado na nova lei de licitações, em seu inciso I, art. 79, conflita com a disposição de preferência de empresas em detrimento de outras, pois culmina com a restrição de outros credenciados em prestar o serviço.',
+     fonte:'REV - G.WNB - 1062/2025, fls. 569'}
+  ],
+  cit:'A cláusula limitadora do ingresso de novos credenciados é ilegal, em afronta ao art. 79, I, da Lei n. 14.133/2021, que estabelece o cadastramento permanente desses.',
+  fonte:'Ementa do AC02 - 308/2025, fls. 583',
+  alerta:'A supressão do cadastro de reserva foi tratada como medida que deve ser adotada, e não apenas recomendada.'
+},
+{
+  id:'q7', cat:['43'], aut:'celio', area:'saude', assunto:'credenciamento', grupo:'execucao',
+  titulo:'A ausência de certidão de regularidade fiscal a cada pagamento gera irregularidade?',
+  posicao:'res',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Não. A Resolução 54/2016 exigia a remessa a cada pagamento, mas a Resolução 88/2018, em vigor, não impõe mais essa exigência. Regularidade com ressalva e recomendação.',
+  eventos:[
+    {d:'ago/2024', p:'TC/23475/2017', v:'Ressalva', c:'res', t:'Mudança normativa afasta a irregularidade. Apoio no AC01-279/2021',
+     cit:'Atualmente, a redação da Resolução TCE/MS n. 88/2018 (em vigor) não impõe mais a remessa dos citados documentos em cada pagamento efetuado.', fonte:'REV - G.WNB - 3541/2023, fls. 468'}
+  ],
+  cit:'Atualmente, a redação da Resolução TCE/MS n. 88/2018 (em vigor) não impõe mais a remessa dos citados documentos em cada pagamento efetuado.', fonte:'REV - G.WNB - 3541/2023, fls. 468'
+},
+{
+  id:'q8', cat:['43-A'], aut:'celio', area:'saude', assunto:'credenciamento', grupo:'execucao',
+  titulo:'A irregularidade da licitação contamina a execução financeira?',
+  posicao:'reg',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Não. A primeira e a segunda fases são julgadas pela Lei de Licitações; a execução financeira, pela Lei 4.320/64. Há separação, com autonomia e independência entre a execução financeira e as demais fases. A contaminação alcança o contrato e os aditivos, mas não a execução.',
+  eventos:[
+    {d:'ago/2024', p:'TC/23475/2017', v:'Não contamina', c:'reg', t:'Contrato e aditivo declarados irregulares por contaminação, sem multa adicional pela vedação ao bis in idem. Execução financeira regular com ressalva',
+     cit:'pela própria discriminação feita pelo ordenamento jurídico, constata-se que há separação, com autonomia e independência entre a fase de execução financeira e as demais.', fonte:'REV - G.WNB - 3541/2023, fls. 469'}
+  ],
+  cit:'pela própria discriminação feita pelo ordenamento jurídico, constata-se que há separação, com autonomia e independência entre a fase de execução financeira e as demais.', fonte:'REV - G.WNB - 3541/2023, fls. 469'
+},
+{
+  id:'q9', cat:['29','30','31'], grupo:'execucao', aut:'waldir', area:'saude', assunto:'credenciamento',
+  titulo:'A distribuição desigual da demanda entre credenciados viola a isonomia?',
+  posicao:'irr',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Sim, quando não há documento que comprove a maior necessidade de atendimento por determinada empresa. No credenciamento, preenchidos os critérios do edital, todos são contratados em igualdade de condições, e o tratamento desigual exige justificativa documentada.',
+  eventos:[
+    {d:'jun/2025', p:'TC/5291/2022', v:'Viola', c:'irr', t:'Irregularidade e multa de 50 UFERMS',
+     cit:'Diante da ausência de apresentação de documentos que comprovassem a maior necessidade de atendimento por uma empresa em detrimento de outras, houve a inobservância dos itens 6.4 e 6.5 do Edital de Credenciamento.', fonte:'REV - G.WNB - 1034/2025, fls. 725'}
+  ],
+  cit:'Diante da ausência de apresentação de documentos que comprovassem a maior necessidade de atendimento por uma empresa em detrimento de outras, houve a inobservância dos itens 6.4 e 6.5 do Edital de Credenciamento.', fonte:'REV - G.WNB - 1034/2025, fls. 725',
+  alerta:'A irregularidade se apoia na ausência de documento que comprovasse a maior necessidade de atendimento por uma empresa, e não na desigualdade em si.'
+},
+{
+  id:'q15', cat:['2','20-A','20-B','20-C'], aut:'waldir', area:'saude', assunto:'credenciamento', grupo:'publicidade',
+  titulo:'A ausência de documentos de remessa obrigatória compromete o credenciamento?',
+  posicao:'irr',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Sim. Não enviados o estudo técnico preliminar, a publicação do ato de ratificação da inexigibilidade e os atos e publicações de homologação e adjudicação, o descumprimento do Manual de Peças Obrigatórias fundamenta a irregularidade do procedimento, com multa e recomendação.',
+  eventos:[
+    {d:'set/2025', p:'TC/2081/2024', v:'Compromete', c:'irr', t:'Seis documentos obrigatórios não enviados, incluindo a publicação da ratificação. Revelia dos responsáveis. Irregularidade e multa de 50 UFERMS',
+     cit:'Nesses termos, diante da ausência de envio de documentos obrigatórios e pela existência de cláusula no edital passível de restringir novos credenciados, declara-se a irregularidade do procedimento com aplicação de multa de 50 (cinquenta) UFERMS ao gestor.',
+     fonte:'REV - G.WNB - 1062/2025, fls. 570'}
+  ],
+  cit:'No entanto, conforme análise da Divisão de Fiscalização restou identificada a ausência de documentos de remessa obrigatória, descumprindo o Manual de Remessa Obrigatória, constante da Resolução TCE/MS n. 88/2018.',
+  fonte:'REV - G.WNB - 1062/2025, fls. 568'
+},
+{
+  id:'q13', cat:['50','50-A'], aut:'celio', area:'saude', assunto:'credenciamento', grupo:'consequencias',
+  titulo:'Cumprida a medida cautelar de natureza satisfativa, ela é confirmada ou revogada?',
+  posicao:'reg',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Confirmada. Revoga-se a liminar quando a decisão definitiva a substitui e a considera improcedente. Se a irregularidade existiu e só foi corrigida por força da medida, a liminar foi satisfativa e não suspensiva, e se confirma, arquivando-se os autos por perda de objeto.',
+  eventos:[
+    {d:'fev/2025', p:'TC/4220/2024', v:'Confirma-se', c:'reg', t:'Acolheu parcialmente o parecer do MPC, que pedia a revogação da liminar. Arquivamento por perda de objeto',
+     cit:'Dessa forma, a liminar foi satisfativa e não suspensiva, tendo sido proferida em 26/07/2024, com a determinação para excluir um dos cargos (Direção Técnica do Hospital) do Credenciamento n. 2/2024 e não a suspensão do procedimento de inexigibilidade de licitação.',
+     fonte:'REV - G.WNB - 3588/2024, fls. 207'}
+  ],
+  cit:'Confirma-se a decisão liminar, que deferiu a medida cautelar nos autos de controle prévio, em relação à inexigibilidade de licitação proveniente de credenciamento, nos termos do art. 154, I, do Regimento Interno, medida de natureza satisfativa e não suspensiva.',
+  fonte:'Ementa do AC02 - 21/2025, fls. 210'
+},
+{
+  id:'q14', cat:['51-A'], aut:'waldir', area:'saude', assunto:'credenciamento', grupo:'consequencias',
+  titulo:'A revelia do jurisdicionado regularmente intimado influi no julgamento?',
+  posicao:'irr',
+  proc:'rascunho', qualif:null,
+  posicaoTxt:'Sim. Intimados para justificar ou apresentar documentos, os gestores deixaram transcorrer o prazo sem manifestação. A revelia é registrada na ementa ao lado da irregularidade e da multa, e os achados da divisão permanecem sem contraditório que os afaste.',
+  eventos:[
+    {d:'set/2025', p:'TC/2081/2024', v:'Influi', c:'irr', t:'Nenhum dos dois responsáveis respondeu à intimação. Irregularidade e multa',
+     cit:'Os gestores foram intimados a justificarem e/ou apresentarem novos documentos, mas não se manifestaram, deixando transcorrer in albis o prazo, caracterizando à revelia.',
+     fonte:'REV - G.WNB - 1062/2025, fls. 568'}
+  ],
+  cit:'Os gestores foram intimados a justificarem e/ou apresentarem novos documentos, mas não se manifestaram, deixando transcorrer in albis o prazo, caracterizando à revelia.',
+  fonte:'REV - G.WNB - 1062/2025, fls. 568',
+  alerta:'A multa foi aplicada a apenas um dos dois responsáveis revéis, sem que o voto explicitasse a razão da distinção.'
+}
+];
+
+var PROC = {
+  'TC/6886/2023':  {ord:1, dt:'mai/2024', ac:'AC02-157/2024', aut:'celio', area:'saude', assunto:'credenciamento', obj:'Credenciamento de serviços médicos complementares — 61 credenciados', res:'Regular com ressalva', resC:'res2', extra:'Três achados afastados. Recomendação quanto à pesquisa de preços e à publicação da homologação e adjudicação. Sem multa, em sentido contrário ao parecer do MPC'},
+  'TC/8328/2018':  {ord:2, dt:'jul/2024', ac:'AC02-203/2024', aut:'celio', area:'saude', assunto:'credenciamento', obj:'Credenciamento de serviços médicos em oftalmologia', res:'Irregular', resC:'irr', extra:'Multa de 50 UFERMS ao Prefeito interino, pela homologação, e 30 UFERMS ao responsável pela remessa'},
+  'TC/23475/2017': {ord:3, dt:'ago/2024', ac:'AC02-242/2024', aut:'celio', area:'saude', assunto:'credenciamento', obj:'Credenciamento de serviços de saúde', res:'Irregular', resC:'irr', extra:'Multa de 50 UFERMS. Contrato e aditivo irregulares por contaminação. Execução financeira regular com ressalva'},
+  'TC/4220/2024':  {ord:4, dt:'fev/2025', ac:'AC02-21/2025', aut:'celio', area:'saude', assunto:'credenciamento', obj:'Controle prévio de credenciamento de serviços especializados de saúde', res:'Liminar confirmada · arquivado', resC:'res2', extra:'Cautelar para excluir a Direção Técnica do edital. Dois achados saneados na fase técnica. Arquivamento por perda de objeto, com remessa ao controle posterior'},
+  'TC/2295/2022':  {ord:5, dt:'mai/2025', ac:'AC02-110/2025', aut:'celio', area:'saude', assunto:'credenciamento', obj:'Credenciamento de serviços médicos', res:'Regular com ressalva', resC:'res2', extra:'Dois achados afastados. Recomendação quanto à paginação dos autos'},
+  'TC/2687/2022':  {ord:6, dt:'mai/2025', ac:'AC02-115/2025', aut:'celio', area:'saude', assunto:'credenciamento', obj:'Credenciamento de pediatria', res:'Regular', resC:'reg', extra:'Duas impropriedades saneadas na fase técnica'},
+  'TC/5291/2022':  {ord:7, dt:'jun/2025', ac:'AC02-161/2025', aut:'waldir', area:'saude', assunto:'credenciamento', obj:'Credenciamento de clínica geral, plantões e remoção', res:'Irregular', resC:'irr', extra:'Multa de 50 UFERMS e recomendação'},
+  'TC/2081/2024':  {ord:8, dt:'set/2025', ac:'AC02-308/2025', aut:'waldir', area:'saude', assunto:'credenciamento', obj:'Chamamento público para credenciamento de serviços médico-hospitalares', res:'Irregular', resC:'irr', extra:'Revelia dos dois responsáveis. Multa de 50 UFERMS ao Secretário de Saúde à época. Recomendação. Um achado mantido pela divisão ficou fora do dispositivo'}
+};
+
+var POSICOES = [
+{
+  id:'PF-CRED-001', v:1, fixada:'04/09/2026', estado:'vigente', q:'q1',
+  enunciado:'O credenciamento é hipótese de inexigibilidade de licitação, com fundamento na previsão geral do caput do art. 25 da Lei 8.666/93, porque a inviabilidade de competição decorre de a Administração dispor-se a contratar todos os interessados aptos.',
+  base:['TC/23475/2017','TC/2295/2022','TC/2687/2022'], ultima:'mai/2025',
+  validada:false
+}
+
+];
+
+/* ---- catálogo completo do tema: 63 perguntas ---- */
+var CATALOGO = [
+ {n:'1',  b:'Formalização do processo', t:'As folhas do processo foram numeradas sequencialmente e rubricadas, permitindo o controle sobre a inclusão ou retirada de documentos?'},
+ {n:'2',  b:'Formalização do processo', t:'O processo foi instruído com documento de formalização da demanda e, se for o caso, estudo técnico preliminar, análise de riscos e termo de referência?', vista:[{p:'TC/4220/2024', t:'apontado pela divisão e saneado na fase técnica, sem chegar ao voto'}]},
+ {n:'3',  b:'Formalização do processo', t:'Consta autorização da autoridade competente para a realização do credenciamento?'},
+ {n:'3-A',b:'Formalização do processo', t:'O ordenador de despesas que autorizou o credenciamento está inscrito no Cadastro Único dos Órgãos Jurisdicionados e Responsáveis — e-CJUR?', nova:true, vista:[{p:'TC/4220/2024', t:'apontado pela divisão e saneado na fase técnica, sem chegar ao voto'}]},
+ {n:'4',  b:'Formalização do processo', t:'Consta parecer jurídico sobre o credenciamento, o edital e seus anexos?'},
+ {n:'5',  b:'Formalização do processo', t:'O parecer jurídico foi emitido pelo órgão de assessoramento jurídico da própria Administração, e não por banca de advogados contratada?'},
+ {n:'6',  b:'Formalização do processo', t:'Consta a motivação, com os elementos fáticos e jurídicos, que caracteriza a hipótese de contratação direta?'},
+ {n:'7',  b:'Formalização do processo', t:'A exigência de que o parecer seja emitido pela Procuradoria própria alcança municípios que não instituíram procuradoria, ou basta que tenha havido efetivo assessoramento jurídico?'},
+ {n:'8',  b:'Formalização do processo', t:'A ausência de paginação, havendo cronologia demonstrável dos documentos, configura irregularidade ou impropriedade formal sujeita a ressalva?'},
+
+ {n:'9',   b:'Preço e orçamento', t:'A estimativa de despesa foi apresentada e calculada na forma estabelecida na lei?'},
+ {n:'10',  b:'Preço e orçamento', t:'A tabela de preços foi juntada, com o registro das cotações de mercado vigentes no momento da contratação?'},
+ {n:'11',  b:'Preço e orçamento', t:'Consta justificativa do preço, como ato distinto da simples juntada da tabela?', vista:[{p:'TC/23475/2017', t:'apontado pela divisão, sem que o voto tratasse do ponto'}]},
+ {n:'12',  b:'Preço e orçamento', t:'As cotações que embasaram a pesquisa de preços correspondem ao objeto efetivamente contratado, quanto a especialidade e natureza do serviço?'},
+ {n:'13',  b:'Preço e orçamento', t:'O Subanexo X, com pesquisa de preço e mapa comparativo, foi apresentado no modelo padrão?'},
+ {n:'13-A',b:'Preço e orçamento', t:'A pesquisa de preços evidencia as fontes utilizadas, permitindo aferir como a Administração estimou os valores?', nova:true, vista:[{p:'TC/2081/2024', t:'achado mantido pela divisão, examinado no voto, mas ausente da parte dispositiva'}]},
+ {n:'14',  b:'Preço e orçamento', t:'Foi demonstrada a compatibilidade da previsão de recursos orçamentários com o compromisso a ser assumido?'},
+
+ {n:'15',  b:'Edital e chamamento', t:'O edital de chamamento e seus anexos foram juntados?'},
+ {n:'16',  b:'Edital e chamamento', t:'A divulgação do edital foi comprovada?'},
+ {n:'17',  b:'Edital e chamamento', t:'A divulgação do ato de designação da comissão que avalia as condições para credenciamento foi comprovada?'},
+ {n:'18',  b:'Edital e chamamento', t:'As impugnações ao edital e as respectivas deliberações foram apresentadas, havendo-as?'},
+ {n:'19',  b:'Edital e chamamento', t:'A Administração comprovou que divulga e mantém à disposição do público o edital de chamamento, permitindo o cadastramento permanente de novos interessados?'},
+ {n:'20',  b:'Edital e chamamento', t:'Consta no Portal da Transparência informação de que o credenciamento está concluído, quando o edital permanece aberto durante a vigência?'},
+ {n:'20-A',b:'Edital e chamamento', t:'A publicação do ato de homologação do credenciamento foi comprovada?', nova:true},
+ {n:'20-B',b:'Edital e chamamento', t:'A publicação do ato de adjudicação foi comprovada?', nova:true},
+ {n:'20-C',b:'Edital e chamamento', t:'A publicação do ato de ratificação da inexigibilidade foi comprovada?', nova:true},
+
+ {n:'21',  b:'Habilitação e credenciamento', t:'A documentação de habilitação jurídica, técnica, econômico-financeira, fiscal e trabalhista dos interessados foi apresentada?'},
+ {n:'22',  b:'Habilitação e credenciamento', t:'A divulgação do termo de credenciamento e de seus anexos foi comprovada?'},
+ {n:'22-A',b:'Habilitação e credenciamento', t:'Há comprovação de que o edital de chamamento foi efetivamente publicado, de modo a permitir o conhecimento e a participação de outros interessados?'},
+ {n:'23',  b:'Habilitação e credenciamento', t:'A relação atualizada dos credenciados foi apresentada no modelo padrão do Subanexo IV?', vista:[{p:'TC/6886/2023', t:'apontada divergência entre a relação e a ficha de controle posterior, saneada na fase técnica, sem chegar ao voto'}]},
+ {n:'24',  b:'Habilitação e credenciamento', t:'Todos os interessados que atenderam aos requisitos do edital foram efetivamente credenciados?'},
+ {n:'25',  b:'Habilitação e credenciamento', t:'O credenciamento permaneceu aberto durante toda a vigência, admitindo o ingresso de novos interessados a qualquer momento?'},
+ {n:'25-A',b:'Habilitação e credenciamento', t:'O edital institui cadastro de reserva ou ordem de preferência entre credenciados, restringindo o ingresso ou a contratação paralela e não excludente?', nova:true},
+
+ {n:'26',  b:'Fundamento da contratação direta', t:'A contratação por credenciamento está fundamentada em inviabilidade de competição, pela possibilidade de contratar todos os interessados aptos?'},
+ {n:'27',  b:'Fundamento da contratação direta', t:'O objeto admite a contratação simultânea de todos os interessados que atendam aos requisitos?'},
+ {n:'27-A',b:'Fundamento da contratação direta', t:'O objeto do credenciamento inclui cargo ou função de direção ou chefia, cujo provimento se dá por designação da Administração?', nova:true},
+ {n:'28',  b:'Fundamento da contratação direta', t:'A adoção reiterada do credenciamento para serviços continuados, diante de quadro efetivo reduzido, foi justificada quanto à realização de concurso público?'},
+
+ {n:'29',  b:'Execução e distribuição da demanda', t:'A distribuição dos serviços entre as empresas credenciadas observou os critérios do edital e os princípios da isonomia e da impessoalidade?'},
+ {n:'30',  b:'Execução e distribuição da demanda', t:'Há disparidade significativa de valores pagos entre credenciados aptos à mesma gama de serviços?'},
+ {n:'31',  b:'Execução e distribuição da demanda', t:'Havendo distribuição desigual, foram apresentados documentos que comprovem a maior necessidade de atendimento por determinada empresa?'},
+ {n:'32',  b:'Execução e distribuição da demanda', t:'Houve direcionamento de consultas, exames ou plantões a credenciado determinado, em contrariedade a vedação do edital?'},
+ {n:'33',  b:'Execução e distribuição da demanda', t:'A execução financeira do contrato foi comprovada e é compatível com os serviços efetivamente prestados?'},
+ {n:'34',  b:'Execução e distribuição da demanda', t:'Houve cobrança de sobretaxa pelos credenciados, vedada pelo edital?'},
+ {n:'35',  b:'Execução e distribuição da demanda', t:'A execução do contrato foi delegada ou transferida a terceiros sem prévia anuência da Administração?'},
+ {n:'36',  b:'Execução e distribuição da demanda', t:'É exigível a justificativa da escolha do prestador em credenciamento, ou a exigência é incompatível com o instituto, que contrata todos os que cumprem os requisitos do edital?'},
+
+ {n:'37',  b:'Contrato, aditivos e prorrogação', t:'A publicação do extrato do contrato administrativo foi feita no prazo legal?'},
+ {n:'38',  b:'Contrato, aditivos e prorrogação', t:'A prorrogação da vigência foi instruída com justificativa, parecer jurídico e atesto de que as condições e os preços permanecem vantajosos?'},
+ {n:'39',  b:'Contrato, aditivos e prorrogação', t:'A republicação do edital para prorrogação foi divulgada?'},
+ {n:'40',  b:'Contrato, aditivos e prorrogação', t:'A prorrogação alterou o quantitativo contratado, e essa alteração foi justificada?'},
+ {n:'41',  b:'Contrato, aditivos e prorrogação', t:'Foi apresentada nota de empenho, ou sua anulação, referente ao termo aditivo?'},
+ {n:'42',  b:'Contrato, aditivos e prorrogação', t:'Os credenciados mantiveram, durante todo o ajuste, as condições que ensejaram o credenciamento?'},
+ {n:'43',  b:'Contrato, aditivos e prorrogação', t:'As certidões de regularidade fiscal foram apresentadas em relação a cada pagamento realizado?'},
+ {n:'43-A',b:'Contrato, aditivos e prorrogação', t:'A irregularidade declarada no procedimento licitatório contamina a fase de execução financeira do contrato?'},
+
+ {n:'44',  b:'Remessa de documentos ao Tribunal', t:'A remessa da documentação do credenciamento foi feita no prazo, contado da divulgação do edital de chamamento?', vista:[{p:'TC/2081/2024', t:'a conferência da divisão ficou prejudicada pela falta do próprio ato de ratificação'}]},
+ {n:'45',  b:'Remessa de documentos ao Tribunal', t:'A remessa referente a cada republicação foi feita no prazo, contado da divulgação do termo aditivo?'},
+ {n:'46',  b:'Remessa de documentos ao Tribunal', t:'A remessa dos documentos da execução contratual foi feita no prazo?'},
+
+ {n:'47',  b:'Consequências', t:'A irregularidade apurada justificou aplicação de multa ao ordenador de despesas à época dos fatos?'},
+ {n:'48',  b:'Consequências', t:'Foi expedida recomendação, e sobre qual ponto?'},
+ {n:'49',  b:'Consequências', t:'Foi expedida determinação com prazo de cumprimento?'},
+ {n:'50',  b:'Consequências', t:'Houve extinção do processo sem julgamento de mérito, por perda do objeto ou arquivamento?'},
+ {n:'50-A',b:'Consequências', t:'Cumprida a medida cautelar de natureza satisfativa, ela é confirmada ou revogada ao final?', nova:true},
+ {n:'51',  b:'Consequências', t:'Foi reconhecida prescrição da pretensão punitiva ou decadência?'},
+ {n:'51-A',b:'Consequências', t:'A ausência de manifestação do jurisdicionado regularmente intimado — revelia — é considerada no julgamento?', nova:true},
+ {n:'52',  b:'Consequências', t:'A responsabilização recaiu sobre quem praticou o ato, quando houve sucessão ou interinidade no cargo?'}
+];
+
+var AREAS = {
+  todas:     {r:'Todas as áreas',      assuntos:[{v:'todos', r:'Todos os assuntos'}]},
+  saude:     {r:'Saúde',              assuntos:[{v:'credenciamento', r:'Credenciamento'},{v:'oss', r:'Contratos de gestão e OSS'},{v:'medicamentos', r:'Aquisição de medicamentos'}]},
+  educacao:  {r:'Educação',           assuntos:[{v:'transporte', r:'Transporte escolar'},{v:'merenda', r:'Alimentação escolar'}]},
+  obras:     {r:'Obras e engenharia', assuntos:[{v:'execucao', r:'Execução de obra'},{v:'aditivos', r:'Aditivos e reequilíbrio'}]},
+  contratos: {r:'Contratos',          assuntos:[{v:'formalizacao', r:'Formalização'},{v:'prorrogacao', r:'Prorrogação'}]},
+  contas:    {r:'Contas',             assuntos:[{v:'gestao', r:'Contas de gestão'},{v:'governo', r:'Contas de governo'}]}
+};
+
+var NOMES = {
+  waldir:'Cons. Waldir Neves Barbosa', osmar:'Cons. Osmar Domingues Jeronymo',
+  jerson:'Cons. Jerson Domingos', marcio:'Cons. Marcio Campos Monteiro',
+  flavio:'Cons. Flávio Esgaib Kayatt', iran:'Cons. Iran Coelho das Neves',
+  ronaldo:'Cons. Ronaldo Chadid', celio:'Cons. Subst. Célio Lima de Oliveira',
+  leandro:'Cons. Subst. Leandro Lobo Ribeiro Pimentel',
+  patricia:'Cons. Subst. Patrícia Sarmento dos Santos',
+  todos:'os relatores do acervo'
+};
+
+var GRUPOS = [
+  {id:'', r:'Todas as questões'},
+  {id:'fundamento', r:'Fundamento da contratação'},
+  {id:'formalizacao', r:'Formalização'},
+  {id:'preco', r:'Preço'},
+  {id:'publicidade', r:'Publicidade'},
+  {id:'remessa', r:'Remessa'},
+  {id:'execucao', r:'Execução e contrato'},
+  {id:'consequencias', r:'Consequências do julgamento'}
+];
+
+var lista = document.getElementById('lista');
+var contEl = document.getElementById('cont');
+var busca = document.getElementById('q');
+var selAut = document.getElementById('aut');
+var modo = 'posicoes', filtro = '', autoridade = 'celio', ndFiltro = 'todas';
+var area = 'saude', assunto = 'credenciamento';
+var selArea = document.getElementById('area'), selAss = document.getElementById('assunto');
+
+function povoaAssunto(){
+  var lista = AREAS[area].assuntos;
+  selAss.innerHTML = lista.map(function(a){
+    return '<option value="'+a.v+'">'+a.r+'</option>'; }).join('');
+  if (!lista.some(function(a){ return a.v === assunto; })) assunto = lista[0].v;
+  selAss.value = assunto;
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function noArea(x){
+  return (area === 'todas' || x.area === area) && (assunto === 'todos' || x.assunto === assunto);
+}
+/* o catálogo de perguntas existe, por ora, apenas para credenciamento */
+function temCatalogo(){
+  return assunto === 'credenciamento' || (area === 'todas' && assunto === 'todos');
+}
+function noAut(q){
+  var okAut = (autoridade === 'todos') ? !!NOMES[q.aut] : (q.aut === autoridade);
+  return okAut && noArea(q);
+}
+/* perguntas do catálogo já decididas pela autoridade em exame */
+function decididasCat(){
+  var s = {};
+  Q.filter(noAut).forEach(function(q){ (q.cat||[]).forEach(function(n){ s[n] = 1; }); });
+  return s;
+}
+function abertasCat(){
+  var d = decididasCat();
+  return CATALOGO.filter(function(c){ return !d[c.n]; });
+}
+/* uma ocorrência só é exibida se o processo for da autoridade em exame */
+function vistaDe(c){
+  if (!c.vista) return null;
+  var v = c.vista.filter(function(x){
+    return autoridade === 'todos' || (PROC[x.p] && PROC[x.p].aut === autoridade); });
+  return v.length ? v : null;
+}
+
+document.getElementById('filtros').innerHTML = GRUPOS.map(function(g){
+  return '<button class="fb" type="button" data-g="'+g.id+'" aria-pressed="'+(g.id===''?'true':'false')+'">'+g.r+'</button>';
+}).join('');
+
+document.getElementById('filtros').addEventListener('click', function(e){
+  var b = e.target.closest('.fb'); if(!b) return;
+  filtro = b.dataset.g;
+  document.querySelectorAll('.fb').forEach(function(x){
+    x.setAttribute('aria-pressed', x.dataset.g===filtro ? 'true':'false'); });
+  desenha();
+});
+
+document.getElementById('modos').addEventListener('click', function(e){
+  var b = e.target.closest('button'); if(!b) return;
+  modo = b.dataset.m;
+  document.querySelectorAll('#modos button').forEach(function(x){
+    x.setAttribute('aria-pressed', x.dataset.m===modo ? 'true':'false'); });
+  desenha();
+});
+
+selAut.addEventListener('change', function(){ autoridade = selAut.value; desenha(); });
+selArea.addEventListener('change', function(){ area = selArea.value; povoaAssunto(); desenha(); });
+selAss.addEventListener('change', function(){ assunto = selAss.value; desenha(); });
+busca.addEventListener('input', desenha);
+document.getElementById('btImp').addEventListener('click', function(){ window.print(); });
+
+function casa(q, termo){
+  if(!termo) return true;
+  var alvo = (q.titulo+' '+q.posicaoTxt+' '+(q.cit||'')+' '+
+    q.eventos.map(function(e){ return e.p+' '+e.v+' '+e.t; }).join(' ')).toLowerCase();
+  return termo.split(/\s+/).every(function(x){ return alvo.indexOf(x) !== -1; });
+}
+
+function listaSemEnunciado(titulo, itens, explica){
+  if (!itens.length) return '';
+  return '<div class="nf"><h3>'+esc(titulo)+' <span class="grpn">'+itens.length+'</span></h3>'+
+    '<p>'+explica+'</p><ul>'+
+    itens.map(function(q){
+      var ps = q.eventos.filter(function(e){ return e.c !== 'neu'; })
+                        .map(function(e){ return e.p; });
+      return '<li><button class="lk" type="button" data-q="'+q.id+'">'+esc(q.titulo)+'</button>'+
+             '<span class="nfp">'+esc(ps.join(' · '))+'</span></li>'; }).join('')+
+    '</ul></div>';
+}
+
+function cartaoPF(pf){
+  var est = {proposta:{r:'proposta ao gabinete', c:'neu'}, vigente:{r:'vigente', c:'reg'},
+             revisao:{r:'em revisão', c:'res'}, superada:{r:'superada', c:'neu'}}[pf.estado];
+  var nSust = (pf.base||[]).length;
+  var q = Q.filter(function(x){ return x.id === pf.q; })[0] || {};
+  return '<article class="pf '+pf.estado+'">'+
+    '<div class="pfcab">'+
+      '<span class="pfid">'+esc(pf.id)+'</span>'+
+      '<span class="pfv">versão '+pf.v+' · fixada em '+esc(pf.fixada)+'</span>'+
+      '<span class="pfest '+est.c+'">'+esc(est.r)+'</span>'+
+      (pf.validada ? '<span class="selo ok">validada</span>' : '<span class="selo rasc">não validada</span>')+
+    '</div>'+
+    '<p class="pfen">'+esc(pf.enunciado)+'</p>'+
+    '<div class="pfbase">'+
+      '<span class="pfn">'+pf.base.length+(pf.base.length===1?' decisão sustenta':' decisões sustentam')+'</span>'+
+      pf.base.map(function(n){ return '<span class="pfp">'+esc(n)+'</span>'; }).join('')+
+      '<span class="pfu">última em '+esc(pf.ultima)+'</span>'+
+    '</div>'+
+    (nSust === 1 && !pf.contraria ? '<div class="pfso"><span class="pfrt">Uma única decisão</span><span>'+
+      'Este enunciado se apoia em uma decisão só. Serve de precedente próprio, mas não permite falar em entendimento consolidado — '+
+      'a diferença entre uma decisão e um entendimento é juízo do gabinete, não do sistema.</span></div>' : '')+
+    (pf.contraria ? '<div class="pfrev"><span class="pfrt">Decisão em sentido contrário</span><span>'+esc(pf.motivo)+
+      ' Decisão em sentido contrário: '+pf.contraria.map(esc).join(', ')+'.</span></div>' : '')+
+    '<button class="pflk" type="button">Ver as decisões e os trechos</button>'+
+    (q.eventos ? painelPF(pf, q) : '')+
+  '</article>';
+}
+
+function painelPF(pf, q){
+  var evs = q.eventos || [];
+  var inB = {}, inC = {};
+  (pf.base || []).forEach(function(n){ inB[n] = 1; });
+  (pf.contraria || []).forEach(function(n){ inC[n] = 1; });
+  var sust   = evs.filter(function(e){ return inB[e.p]; });
+  var contra = evs.filter(function(e){ return inC[e.p]; });
+  var naoEnf = evs.filter(function(e){ return e.c === 'neu' && !inB[e.p] && !inC[e.p]; });
+  var outras = evs.filter(function(e){ return e.c !== 'neu' && !inB[e.p] && !inC[e.p]; });
+
+  var partes = ['<b>'+sust.length+'</b> sustenta'+(sust.length===1?'':'m')+' o enunciado'];
+  if (contra.length) partes.push('<b>'+contra.length+'</b> em sentido contrário');
+  if (naoEnf.length) partes.push('<b>'+naoEnf.length+'</b> em que o voto não enfrentou a questão');
+  if (outras.length) partes.push('<b>'+outras.length+'</b> ainda sem classificação');
+
+  return '<div class="det">'+
+    '<p class="pfcnt">A questão apareceu em <b>'+evs.length+'</b> processo'+(evs.length===1?'':'s')+
+      ' deste recorte — '+partes.join(' · ')+'.</p>'+
+    '<div class="linhaT"><div class="trilha">'+linhaTempo(q)+'</div></div>'+
+    blocoTrechos('O QUE SUSTENTA O ENUNCIADO', sust, q)+
+    blocoTrechos('DECISÃO EM SENTIDO CONTRÁRIO', contra, q)+
+    blocoTrechos('A QUESTÃO APARECEU, MAS O VOTO NÃO A ENFRENTOU', naoEnf, q)+
+    blocoTrechos('AINDA SEM CLASSIFICAÇÃO', outras, q)+
+  '</div>';
+}
+
+function legenda(){
+  var it = [
+    ['reiterada','reg','três ou mais decisões no mesmo sentido'],
+    ['repetida','res','duas decisões no mesmo sentido'],
+    ['isolada','neu','uma única decisão sobre a questão'],
+    ['divergente','irr','duas ou mais decisões com respostas diferentes']
+  ];
+  return '<div class="leg"><span class="legt">O que a etiqueta indica</span>'+
+    it.map(function(x){
+      return '<span class="legi"><span class="gr '+x[1]+'">'+x[0]+'</span>'+x[2]+'</span>';
+    }).join('')+
+    '<span class="legn">A contagem considera todas as decisões do acervo examinado, e não apenas as deste processo. '+
+    'Decisões em que o voto não enfrentou a questão não entram na conta.</span></div>';
+}
+
+function consolida(q){
+  var ef = q.eventos.filter(function(e){ return e.c !== 'neu'; });
+  var rs = {}; ef.forEach(function(e){ rs[e.v] = 1; });
+  var d = Object.keys(rs).length;
+  if (ef.length === 0) return {g:'nenhuma', r:'sem decisão de mérito', c:'neu'};
+  if (d > 1)           return {g:'divergente', r:ef.length+' decisões, respostas diferentes', c:'irr'};
+  if (ef.length >= 3)  return {g:'reiterada', r:ef.length+' decisões no mesmo sentido', c:'reg'};
+  if (ef.length === 2) return {g:'repetida', r:'2 decisões no mesmo sentido', c:'res'};
+  return {g:'isolada', r:'decisão única', c:'neu'};
+}
+
+function medida(q){
+  var ef = q.eventos.filter(function(e){ return e.c !== 'neu'; });
+  var n = ef.length, nao = q.eventos.length - n;
+  var sf = nao ? ' · '+nao+' vez'+(nao===1?'':'es')+' sem enfrentamento' : '';
+  var resp = {}; ef.forEach(function(e){ resp[e.v] = 1; });
+  var distintas = Object.keys(resp).length;
+  if (n === 0) return {t:'sem decisão de mérito'+sf, d:'A questão apareceu nos processos, mas nenhum voto a enfrentou.', dv:false};
+  if (n === 1) return {t:'1 decisão'+sf, d:'Uma decisão. Não permite falar em entendimento consolidado.', dv:false};
+  if (distintas <= 1) return {t:n+' decisões · mesma resposta'+sf, d:'', dv:false};
+  return {t:n+' decisões · respostas divergentes'+sf, d:'', dv:true};
+}
+
+function casaAberta(a, termo){
+  if(!termo) return true;
+  var alvo = (a.b+' '+a.t).toLowerCase();
+  return termo.split(/\s+/).every(function(x){ return alvo.indexOf(x) !== -1; });
+}
+
+function listaAbertas(itens, termo){
+  var por = {}, ordem = [];
+  itens.forEach(function(a){
+    if (!por[a.b]) { por[a.b] = []; ordem.push(a.b); }
+    por[a.b].push(a);
+  });
+  return ordem.map(function(b){
+    return '<div class="grp"><h4 class="grpt">'+esc(b)+
+      ' <span class="grpn">'+por[b].length+'</span></h4><ul>'+
+      por[b].map(function(a){
+        var vs = vistaDe(a);
+        return '<li'+(vs?' class="temvista"':'')+'>'+
+          '<span class="bl'+(a.nova?' nv':'')+'">'+esc(a.n)+'</span>'+
+          '<span class="qtx">'+esc(a.t)+
+          (a.nova ? '<span class="tagnv">nova</span>' : '')+
+          (vs ? vs.map(function(x){
+             return '<em class="vst"><b>Já apareceu em '+esc(x.p)+'</b> — '+esc(x.t)+'</em>'; }).join('') : '')+
+          '</span></li>';
+      }).join('')+'</ul></div>';
+  }).join('');
+}
+
+function linhaTempo(q){
+  return q.eventos.map(function(e){
+    var pr = PROC[e.p] || {};
+    return '<div class="ev '+e.c+'"><div class="pt"></div>'+
+      '<div class="dt">'+esc(pr.dt||e.d||'')+'</div>'+
+      '<button class="pr" type="button" data-p="'+esc(e.p)+'">'+esc(e.p)+'</button>'+
+      '<div class="vd">'+esc(e.v)+'</div><div class="ds">'+esc(e.t)+'</div></div>';
+  }).join('');
+}
+function blocoTrechos(titulo, lista, q){
+  if (!lista.length) return '';
+  return '<h4>'+esc(titulo)+' <span class="h4n">'+lista.length+'</span></h4>'+
+    lista.map(function(e){ return trechoUm(e, q); }).join('');
+}
+function trechoUm(e, q){
+  var pr = PROC[e.p] || {};
+  return '<div class="tr '+e.c+'">'+
+    '<div class="trc"><span class="trp">'+esc(e.p)+'</span>'+
+    '<span class="trd">'+esc(pr.dt||e.d||'')+'</span>'+
+    '<span class="trv">'+esc(e.v)+'</span></div>'+
+    (e.cit ? '<p class="cit">'+esc(e.cit)+'</p>'
+           : '<p class="semcit">Não há trecho a transcrever.</p>')+
+    '<p class="fonte">'+esc(e.fonte || q.fonte)+'</p></div>';
+}
+function trechosVoto(q){
+  return q.eventos.map(function(e){
+    var pr = PROC[e.p] || {};
+    return '<div class="tr '+e.c+'">'+
+      '<div class="trc"><span class="trp">'+esc(e.p)+'</span>'+
+      '<span class="trd">'+esc(pr.dt||e.d||'')+'</span>'+
+      '<span class="trv">'+esc(e.v)+'</span></div>'+
+      (e.cit ? '<p class="cit">'+esc(e.cit)+'</p>'
+             : '<p class="semcit">Não há trecho a transcrever.</p>')+
+      '<p class="fonte">'+esc(e.fonte || q.fonte)+'</p></div>';
+  }).join('');
+}
+
+function cartaoQ(q){
+  var evs = linhaTempo(q);
+  var deOutro = (autoridade==='todos') ? q.aut!=='celio' : q.aut!==autoridade;
+  var m = medida(q);
+  var selo = q.proc === 'validada'
+    ? '<span class="selo ok">validada pelo gabinete</span>'
+    : '<span class="selo rasc">extração não validada</span>';
+  var qual = q.qualif
+    ? '<div class="qualif'+(q.qualif.por?'':' pend')+'">'+
+        '<span class="qet">'+(q.qualif.por ? 'Qualificação de '+esc(q.qualif.por) : 'Qualificação pendente')+'</span>'+
+        '<span class="qtx">'+esc(q.qualif.r)+
+        (q.qualif.por ? '' : ' — esta leitura ainda não foi confirmada por ninguém, e o sistema não a produz sozinho')+
+        '</span></div>'
+    : '';
+  return '<article class="q" id="'+q.id+'"><div class="cab">'+
+    '<div class="rot">'+(m.dv ? '<span class="dst">'+esc(m.t)+'</span>' : esc(m.t))+
+      (deOutro ? ' · <span class="dst">'+esc(NOMES[q.aut])+'</span>' : '')+
+      selo+'</div>'+
+    '<h2>'+esc(q.titulo)+'</h2>'+
+    '<div class="pos '+q.posicao+'"><span class="et">Tese extraída</span>'+
+    '<span class="tx">'+esc(q.posicaoTxt)+(m.d ? ' <i>'+esc(m.d)+'</i>' : '')+'</span></div></div>'+
+    '<div class="linhaT"><div class="trilha">'+evs+'</div></div>'+
+    qual +
+    (q.alerta ? '<div class="alerta">'+esc(q.alerta)+'</div>' : '')+
+    '<button class="abrir" type="button">Ver o que está escrito em cada voto</button>'+
+    '<div class="det"><h4>O QUE ESTÁ ESCRITO EM CADA VOTO</h4>'+
+    q.eventos.map(function(e){
+      var pr = PROC[e.p] || {};
+      return '<div class="tr '+e.c+'">'+
+        '<div class="trc"><span class="trp">'+esc(e.p)+'</span>'+
+        '<span class="trd">'+esc(pr.dt||e.d||'')+'</span>'+
+        '<span class="trv">'+esc(e.v)+'</span></div>'+
+        (e.cit ? '<p class="cit">'+esc(e.cit)+'</p>'
+               : '<p class="semcit">Não há trecho a transcrever.</p>')+
+        '<p class="fonte">'+esc(e.fonte || q.fonte)+'</p></div>';
+    }).join('')+'</div></article>';
+}
+
+function cartaoP(num, qs){
+  var p = PROC[num];
+  var itens = qs.map(function(o){
+    var c = o.cons;
+    return '<div class="qi '+o.c+'"><span class="bul"></span>'+
+      '<button class="tt lk" type="button" data-q="'+o.id+'">'+esc(o.titulo)+'</button>'+
+      '<span class="gr '+c.c+'" title="'+esc(c.r)+'">'+esc(c.g)+'</span>'+
+      '<span class="vv">'+esc(o.v)+'</span></div>';
+  }).join('');
+  return '<article class="proc"><div class="top"><span class="num">'+esc(num)+'</span>'+
+    '<span class="dtp">'+esc(p.ac)+' · '+esc(p.dt)+'</span></div>'+
+    '<p class="obj">'+esc(p.obj)+'</p>'+
+    (p.aut!=='celio' ? '<div class="meta">Relatado pelo '+esc(NOMES[p.aut])+'</div>' : '')+
+    '<span class="stat '+p.resC+'">'+esc(p.res)+'</span>'+
+    '<div class="meta">'+esc(p.extra)+'</div>'+
+
+    itens+'</article>';
+}
+
+function semDados(){
+  return '<div class="vazio"><b>Nada foi processado neste recorte ainda.</b><br>'+
+    'Não há decisões extraídas para <b>'+esc(NOMES[autoridade])+'</b> em <b>'+
+    esc(AREAS[area].r)+' · '+esc((AREAS[area].assuntos.filter(function(a){return a.v===assunto;})[0]||{}).r||assunto)+'</b>.<br><br>'+
+    'O piloto começou por saúde e credenciamento, no gabinete do Cons. Waldir Neves Barbosa. '+
+    'As demais combinações existem na estrutura para mostrar como o sistema cresce, e serão preenchidas conforme os temas forem processados.</div>';
+}
+
+function desenha(){
+  var termo = busca.value.trim().toLowerCase();
+  var rotAss = ((AREAS[area].assuntos.filter(function(a){return a.v===assunto;})[0])||{}).r || assunto;
+  var sujeito = (autoridade==='todos') ? 'os relatores do acervo'
+    : (/Subst\./.test(NOMES[autoridade]||'') ? 'o Conselheiro Substituto' : 'o Conselheiro');
+  document.getElementById('titulo').innerHTML = (area==='todas')
+    ? 'O que ' + sujeito + (autoridade==='todos' ? ' já decidiram ' : ' já decidiu ') +
+      '<span class="assunto">em todas as áreas</span>'
+    : 'Como ' + sujeito + (autoridade==='todos' ? ' têm decidido ' : ' tem decidido ') +
+      '<span class="assunto">' + esc(rotAss.toLowerCase()) + '</span>';
+
+  var doAut = Q.filter(noAut);
+  var procsAut = Object.keys(PROC).filter(function(n){
+    var p = PROC[n];
+    var okAut = (autoridade==='todos') ? !!NOMES[p.aut] : (p.aut===autoridade);
+    return okAut && noArea(p); });
+  var multi = doAut.filter(function(q){ return q.eventos.length>1; }).length;
+
+  document.getElementById('subtitulo').textContent =
+    modo==='posicoes' ? 'O que já se pode citar como entendimento do gabinete, com o número de decisões que sustenta cada enunciado e o estado em que ele se encontra.'
+    : modo==='aberto' ? 'O que ainda não foi decidido, percorrendo o catálogo do tema pergunta por pergunta.'
+    : modo==='processo' ? 'Cada processo com todas as questões que decidiu, para conferir se alguma ficou de fora.'
+    : 'Cada bloco é uma questão jurídica que apareceu nos processos do relator. A linha mostra as decisões em ordem de julgamento, para que se veja de relance se a posição se manteve.';
+
+  var temAcervo = procsAut.length > 0;
+  document.getElementById('resumo').innerHTML = [
+    '<b>'+procsAut.length+'</b> processo'+(procsAut.length===1?'':'s')+' julgado'+(procsAut.length===1?'':'s'),
+    '<b>'+doAut.length+'</b> questões identificadas',
+    '<b>'+multi+'</b> decidida'+(multi===1?'':'s')+' mais de uma vez',
+    (temAcervo && temCatalogo())
+      ? '<b>'+abertasCat().length+'</b> ainda sem decisão neste recorte'
+      : 'catálogo do tema com <b>'+CATALOGO.length+'</b> perguntas'
+  ].map(function(x){ return '<span class="pill">'+x+'</span>'; }).join('');
+
+  document.getElementById('filtros').style.display = (modo==='questao') ? 'flex' : 'none';
+
+  if (!doAut.length && !procsAut.length){
+    contEl.innerHTML = 'sem dados neste recorte';
+    lista.innerHTML = semDados();
+    return;
+  }
+
+  if (modo==='posicoes'){
+    var idsAut = {}; doAut.forEach(function(q){ idsAut[q.id] = 1; });
+    var pfs = temCatalogo() ? POSICOES.filter(function(x){ return idsAut[x.q]; }) : [];
+    pfs = pfs.filter(function(pf){
+      if (!termo) return true;
+      var alvo = (pf.id+' '+pf.enunciado+' '+pf.base.join(' ')).toLowerCase();
+      return termo.split(/\s+/).every(function(x){ return alvo.indexOf(x) !== -1; });
+    });
+    var vig = pfs.filter(function(x){ return x.estado==='vigente'; }).length;
+    var rev = pfs.filter(function(x){ return x.estado==='revisao'; }).length;
+    var prp = pfs.filter(function(x){ return x.estado==='proposta'; }).length;
+    var conf = pfs.filter(function(x){ return x.contraria && x.contraria.length; }).length;
+    var comPF = {}; POSICOES.forEach(function(x){ comPF[x.q] = 1; });
+    var isoladas = doAut.filter(function(q){ return !comPF[q.id]; });
+    var naoVal = pfs.filter(function(x){ return !x.validada; }).length;
+    var gDiv = isoladas.filter(function(q){ return consolida(q).g === 'divergente'; });
+    var gRep = isoladas.filter(function(q){ return consolida(q).g === 'repetida'; });
+    var gIso = isoladas.filter(function(q){ return consolida(q).g === 'isolada'; });
+    contEl.innerHTML =
+      (vig ? '<b>'+vig+'</b> vigente'+(vig===1?'':'s')+' · ' : '')+
+      (rev ? '<b>'+rev+'</b> em revisão · ' : '')+
+      (naoVal ? '<b>'+naoVal+'</b> aguardando validação · ' : '')+
+      (gDiv.length ? '<b>'+gDiv.length+'</b> com divergência a qualificar · ' : '')+
+      (gRep.length ? '<b>'+gRep.length+'</b> a uma decisão de firmar · ' : '')+
+      '<b>'+gIso.length+'</b> com decisão única';
+    if (!pfs.length && !isoladas.length){ lista.innerHTML = semDados(); return; }
+    lista.innerHTML =
+      '<div class="aviso-topo"><b>Cada posição tem dois estados, e eles não se confundem.</b><br>'+
+      '<b>Vigente, em revisão ou superada</b> é o ciclo de vida do enunciado: uma decisão em sentido contrário o coloca em revisão e chama a qualificação humana. '+
+      '<b>Validada ou não validada</b> é outra coisa: diz se o gabinete já confirmou que aquele é o entendimento dele. '+
+      'Um enunciado pode estar vigente e ainda não validado — é o estado normal enquanto a validação não acontece.<br><br>'+
+      'A posição recebe identificador, versão e data, e não é reescrita quando entram decisões novas. '+
+      'É o que permite citá-la em uma minuta sabendo que não mudou desde a leitura. '+
+      'Só firma posição a questão decidida <b>três ou mais vezes no mesmo sentido</b>. '+
+      'As demais ficam nas listas ao final, com o que falta para cada uma.</div>'+
+      pfs.map(cartaoPF).join('')+
+      listaSemEnunciado('Questões com respostas divergentes', gDiv,
+        'Não firmam posição enquanto a diferença não for qualificada. A contagem registra que a mesma pergunta recebeu respostas incompatíveis; '+
+        'dizer se isso é mudança de entendimento, distinção de fato ou conferência independente é juízo do gabinete, não do sistema.')+
+      listaSemEnunciado('Questões decididas duas vezes no mesmo sentido', gRep,
+        'Falta uma decisão para firmar posição. São as candidatas mais próximas, e vale acompanhá-las.')+
+      listaSemEnunciado('Questões decididas uma única vez', gIso,
+        'Precedente próprio, que pode ser citado como tal — mas uma decisão não faz entendimento consolidado. '+
+        'Ficam registradas porque, com mais decisões no mesmo sentido, é delas que as próximas posições nascem.');
+    return;
+  }
+
+  if (modo==='aberto'){
+    var base = temCatalogo() ? abertasCat() : [];
+    var abertasV = base.filter(function(a){ return casaAberta(a, termo); });
+    var decididasV = doAut.filter(function(q){ return casa(q, termo); });
+    var sufCont = (termo && decididasV.length)
+      ? ' · <b>'+decididasV.length+'</b> já decidida'+(decididasV.length===1?'':'s')+' com esses termos' : '';
+    if (!abertasV.length){
+      lista.innerHTML = '<div class="vazio"><b>Nenhuma pergunta em aberto com esses termos.</b><br>'+
+        (decididasV.length
+          ? 'Mas há '+decididasV.length+' questão'+(decididasV.length===1?'':'ões')+' já decidida'+(decididasV.length===1?'':'s')+' sobre isso. <button class="ir" type="button" data-ir="questao">Ver em Por questão</button>'
+          : 'O termo não aparece nem no que foi decidido, nem no catálogo do tema.')+'</div>';
+      return;
+    }
+    var comVista = abertasV.filter(function(a){ return !!vistaDe(a); });
+    var novas    = abertasV.filter(function(a){ return !!a.nova; });
+    var grupos = [
+      {id:'todas',  r:'Todas',                     n:abertasV.length, lista:abertasV},
+      {id:'vistas', r:'Já apareceram em processo', n:comVista.length, lista:comVista},
+      {id:'novas',  r:'Novas no catálogo',         n:novas.length,    lista:novas}
+    ].filter(function(g){ return g.id==='todas' || g.n; });
+    if (!grupos.some(function(g){ return g.id===ndFiltro; })) ndFiltro = 'todas';
+    var sel = grupos.filter(function(g){ return g.id===ndFiltro; })[0];
+    contEl.innerHTML = (ndFiltro === 'todas'
+      ? '<b>'+abertasV.length+'</b> '+(abertasV.length===1?'pergunta':'perguntas')+' sem decisão'
+      : '<b>'+sel.n+'</b> de '+abertasV.length+' · '+esc(sel.r.toLowerCase())) + sufCont;
+
+    lista.innerHTML = '<div class="nd">'+
+      '<h3>Perguntas sem decisão do relator</h3>'+
+      '<p><b>'+abertasV.length+'</b> das <b>'+CATALOGO.length+'</b> perguntas do catálogo de credenciamento. '+
+      'Ao redigir minuta sobre qualquer uma delas, não há precedente próprio a consultar.'+
+      (area==='todas' ? ' Este é o único catálogo construído até agora; as demais áreas ainda não têm vocabulário próprio.' : '')+'</p>'+
+      '<div class="ndtopo">'+grupos.map(function(g){
+        return '<button class="ndf" type="button" data-nd="'+g.id+'" aria-pressed="'+(g.id===ndFiltro?'true':'false')+'">'+
+               esc(g.r)+' <b>'+g.n+'</b></button>'; }).join('')+'</div>'+
+      '<p class="ndleg">O número à esquerda é o da pergunta no catálogo. '+
+      'As linhas em destaque já apareceram em processo do relator e não chegaram ao voto — são as mais prováveis de voltar. '+
+      'As marcadas como <span class="tagnv">nova</span> entraram no catálogo por força dos processos mais recentes.</p>'+
+      (sel.lista.length ? listaAbertas(sel.lista, termo)
+        : '<div class="ndvazio">Nenhuma pergunta nesta condição.</div>')+
+      '</div>'+
+      (termo && decididasV.length
+        ? '<div class="vazio">Sobre esses mesmos termos, há <b>'+decididasV.length+'</b> questão'+(decididasV.length===1?'':'ões')+' já decidida'+(decididasV.length===1?'':'s')+'. <button class="ir" type="button" data-ir="questao">Ver em Por questão</button></div>'
+        : '');
+    return;
+  }
+
+  if (modo==='processo'){
+    var mapa = {};
+    procsAut.forEach(function(n){ mapa[n] = []; });
+    doAut.forEach(function(q){
+      q.eventos.forEach(function(e){
+        if (mapa[e.p]) mapa[e.p].push({id:q.id, titulo:q.titulo, v:e.v, c:e.c, cons:consolida(q)}); });
+    });
+    var ordem = procsAut.slice().sort(function(a,b){ return PROC[a].ord - PROC[b].ord; });
+    var visP = ordem.filter(function(n){
+      if(!termo) return true;
+      var alvo = (n+' '+PROC[n].obj+' '+PROC[n].res+' '+PROC[n].extra+' '+
+        mapa[n].map(function(o){return o.titulo;}).join(' ')).toLowerCase();
+      return termo.split(/\s+/).every(function(x){ return alvo.indexOf(x)!==-1; });
+    });
+    var reit = doAut.filter(function(q){ return consolida(q).g === 'reiterada'; }).length;
+    var isol = doAut.filter(function(q){ return consolida(q).g === 'isolada'; }).length;
+    contEl.innerHTML = '<b>'+visP.length+'</b> processo'+(visP.length===1?'':'s')+
+      ' · <b>'+reit+'</b> questão reiterada · <b>'+isol+'</b> isoladas';
+    var rep = doAut.filter(function(q){ return consolida(q).g === 'repetida'; }).length;
+    var div = doAut.filter(function(q){ return consolida(q).g === 'divergente'; }).length;
+    var pl = function(n, s, p){ return n + ' ' + (n===1 ? s : p); };
+    var partes = [];
+    if (reit) partes.push('<b>'+pl(reit,'questão foi decidida três vezes ou mais no mesmo sentido','questões foram decididas três vezes ou mais no mesmo sentido')+'</b>');
+    if (rep)  partes.push('<b>'+pl(rep,'foi decidida duas vezes no mesmo sentido','foram decididas duas vezes no mesmo sentido')+'</b>');
+    if (div)  partes.push('<b>'+pl(div,'tem respostas incompatíveis entre decisões','têm respostas incompatíveis entre decisões')+'</b>');
+    if (isol) partes.push('<b>'+pl(isol,'foi decidida uma única vez','foram decididas uma única vez')+'</b>');
+    var av = '<div class="aviso-topo"><b>O que já dá para consolidar.</b> '+
+      'Neste recorte, '+ partes.join(', ').replace(/, ([^,]*)$/, ' e $1') +'. '+
+      (reit ? 'Só a primeira faixa se aproxima de entendimento reiterado. ' : 'Nenhuma questão chegou a três decisões no mesmo sentido. ')+
+      'A etiqueta ao lado de cada questão mostra em que situação ela está.</div>'+ legenda();
+    lista.innerHTML = visP.length ? av + visP.map(function(n){ return cartaoP(n, mapa[n]); }).join('')
+      : '<div class="vazio">Nenhum processo com esses termos.</div>';
+    return;
+  }
+
+  var vis = doAut.filter(function(q){ return (!filtro || q.grupo===filtro) && casa(q, termo); });
+  var abT = termo ? abertasCat().filter(function(a){ return casaAberta(a, termo); }).length : 0;
+  contEl.innerHTML = '<b>'+vis.length+'</b> quest'+(vis.length===1?'ão':'ões')+' decidida'+(vis.length===1?'':'s')+
+    (filtro ? ' · assunto filtrado' : '')+
+    (abT ? ' · <b>'+abT+'</b> sem decisão sobre os mesmos termos' : '');
+  if (vis.length){
+    lista.innerHTML = '<div class="aviso-topo"><b>Nenhuma destas teses foi validada ainda.</b> '+
+      'O texto em destaque é a extração feita a partir dos votos, e não a redação da autoridade. '+
+      'A etiqueta no alto de cada bloco conta as decisões e diz se as respostas coincidem — isso é contagem. '+
+      'Dizer se uma diferença de resposta é mudança de entendimento ou outra coisa é qualificação, e depende de pessoa.</div>'+
+      vis.map(cartaoQ).join('');
+  } else {
+    var ab = abertasCat().filter(function(a){ return casaAberta(a, termo); });
+    lista.innerHTML = ab.length
+      ? '<div class="nd"><h3>O senhor ainda não decidiu sobre isso</h3>'+
+        '<p>Nenhuma das questões extraídas destes processos responde a esses termos. Mas o catálogo do tema prevê '+
+        (ab.length===1 ? 'a pergunta abaixo, que segue' : 'as perguntas abaixo, que seguem')+' sem decisão neste recorte.</p>'+
+        listaAbertas(ab, termo)+'</div>'
+      : '<div class="vazio"><b>Nada foi encontrado com esses termos.</b><br>'+
+        'O termo não aparece nas questões decididas nem no catálogo do tema. A busca alcança apenas o recorte destes processos.</div>';
+  }
+}
+
+lista.addEventListener('click', function(e){
+  var pk = e.target.closest('.pflk');
+  if (pk){
+    var pfa = pk.closest('.pf');
+    var pab = pfa.classList.toggle('aberta');
+    pk.textContent = pab ? 'Ocultar as decisões e os trechos' : 'Ver as decisões e os trechos';
+    return;
+  }
+  var b = e.target.closest('.abrir');
+  if (b){
+    var art = b.closest('.q');
+    var ab = art.classList.toggle('aberta');
+    b.textContent = ab ? 'Ocultar os trechos' : 'Ver o que está escrito em cada voto';
+    return;
+  }
+  var nf = e.target.closest('.ndf');
+  if (nf){ ndFiltro = nf.dataset.nd; desenha(); return; }
+  var ir = e.target.closest('.ir');
+  if (ir){
+    modo = ir.dataset.ir;
+    document.querySelectorAll('#modos button').forEach(function(x){
+      x.setAttribute('aria-pressed', x.dataset.m===modo ? 'true':'false'); });
+    desenha();
+    window.scrollTo({top:0, behavior:'smooth'});
+    return;
+  }
+  var lk = e.target.closest('.lk');
+  if (lk){
+    modo = 'questao'; busca.value = ''; filtro = '';
+    document.querySelectorAll('#modos button').forEach(function(x){
+      x.setAttribute('aria-pressed', x.dataset.m==='questao' ? 'true':'false'); });
+    document.querySelectorAll('.fb').forEach(function(x){
+      x.setAttribute('aria-pressed', x.dataset.g==='' ? 'true':'false'); });
+    desenha();
+    var alvo = document.getElementById(lk.dataset.q);
+    if (alvo) alvo.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  var pb = e.target.closest('.pr');
+  if (pb){
+    modo = 'processo';
+    busca.value = pb.dataset.p;
+    document.querySelectorAll('#modos button').forEach(function(x){
+      x.setAttribute('aria-pressed', x.dataset.m==='processo' ? 'true':'false'); });
+    desenha();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+});
+
+povoaAssunto();
+desenha();
+})();
+</script>
+</body>
+</html>
